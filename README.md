@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Preinvoice App
 
 Angular + Postgres + PostgREST project for creating calibration preinvoices with customer lookup and an equipment price catalog.
@@ -156,3 +157,7 @@ Invoke-RestMethod -Method Post `
     ├── nginx.conf
     └── proxy.conf.json
 ```
+=======
+# ADZ_preinvoice
+Abzar Daqiq Zangan
+>>>>>>> 0b3b763d843f0489804077f32760409462597164
