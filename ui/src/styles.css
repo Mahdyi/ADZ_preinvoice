@@ -1,0 +1,11 @@
+html {
+  min-height: 100%;
+  background: #eef4f1;
+}
+
+body {
+  min-height: 100%;
+  margin: 0;
+  font-family: Tahoma, Arial, sans-serif;
+  color: #152522;
+}
