@@ -1,0 +1,16 @@
+<div class="print-total-box">
+  <div>
+    <span>جمع</span>
+    <strong>{{ formatMoney(subtotal) }} ریال</strong>
+  </div>
+
+  <div *ngIf="showVat">
+    <span>مالیات بر ارزش افزوده ۹٪</span>
+    <strong>{{ formatMoney(vat) }} ریال</strong>
+  </div>
+
+  <div>
+    <span>جمع کل</span>
+    <strong>{{ formatMoney(grandTotal) }} ریال</strong>
+  </div>
+</div>

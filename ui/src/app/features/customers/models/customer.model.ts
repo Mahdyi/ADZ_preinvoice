@@ -19,5 +19,5 @@ export const emptyCustomer: CustomerDraft = {
   address: null,
   phone: null,
   code: null,
-  title: ''
+  title: '',
 };

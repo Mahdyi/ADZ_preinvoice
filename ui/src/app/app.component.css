@@ -268,6 +268,10 @@ h3 {
   gap: 12px;
 }
 
+.equipment-create-grid {
+  grid-template-columns: 80px minmax(220px, 1.4fr) 90px minmax(150px, 1fr) 120px 140px 140px;
+}
+
 label {
   position: relative;
   display: grid;
@@ -396,7 +400,7 @@ textarea {
 
 .item-row {
   display: grid;
-  grid-template-columns: 54px minmax(230px, 1.6fr) 86px minmax(160px, 1fr) 120px 130px 130px 42px;
+  grid-template-columns: 54px minmax(230px, 1.6fr) 86px minmax(160px, 1fr) 120px 130px 130px 118px;
   gap: 8px;
   align-items: start;
   padding: 8px 0;
@@ -435,6 +439,23 @@ textarea {
 
 .equipment-menu {
   min-width: 360px;
+}
+
+.create-option {
+  border-top: 1px solid #dce7e3 !important;
+  color: #11635a !important;
+}
+
+.row-tool-actions {
+  display: flex;
+  gap: 6px;
+  align-items: start;
+}
+
+.add-catalog-button {
+  min-height: 40px;
+  padding: 8px 10px;
+  white-space: nowrap;
 }
 
 button,
@@ -560,13 +581,14 @@ button:disabled {
 
   .invoice-header,
   .buyer-grid,
-  .create-grid {
+  .create-grid,
+  .equipment-create-grid {
     grid-template-columns: 1fr;
   }
 
   .item-row {
-    grid-template-columns: 42px minmax(210px, 1fr) 82px 150px 112px 122px 122px 40px;
-    min-width: 900px;
+    grid-template-columns: 42px minmax(210px, 1fr) 82px 150px 112px 122px 122px 118px;
+    min-width: 980px;
   }
 
   .empty-print-row {
@@ -709,8 +731,16 @@ button:disabled {
   }
 
   .icon-button {
-    width: 100%;
     font-size: 1.2rem;
+  }
+
+  .row-tool-actions {
+    display: grid;
+    grid-template-columns: 1fr 44px;
+  }
+
+  .row-tool-actions .icon-button {
+    width: 44px;
   }
 
   .equipment-menu {

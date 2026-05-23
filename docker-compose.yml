@@ -41,7 +41,7 @@ services:
     depends_on:
       - postgrest
     ports:
-      - "8080:80"
+      - "18080:80"
 
   swagger:
     image: swaggerapi/swagger-ui:latest
@@ -52,7 +52,7 @@ services:
     environment:
       SWAGGER_JSON_URL: http://localhost:3000/
     ports:
-      - "8081:8080"
+      - "18082:8080"
 
 
 volumes:

@@ -1,0 +1,180 @@
+:host {
+  display: block;
+}
+
+.buyer-section {
+  padding: 18px 22px;
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+h2 {
+  color: #16322d;
+  font-size: 1.15rem;
+}
+
+.buyer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+label {
+  position: relative;
+  display: grid;
+  gap: 7px;
+  color: #39524d;
+  font-size: 0.9rem;
+}
+
+.full {
+  grid-column: 1 / -1;
+}
+
+input,
+textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #cbdad5;
+  border-radius: 7px;
+  padding: 10px 11px;
+  color: #14231f;
+  background: #fbfdfc;
+  font: inherit;
+}
+
+input[readonly],
+textarea[readonly] {
+  background: #f4f8f6;
+  color: #526862;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.dropdown {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 4px);
+  right: 0;
+  left: 0;
+  max-height: 260px;
+  overflow-y: auto;
+  padding: 6px;
+  border: 1px solid #c8d8d3;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 14px 34px rgba(28, 54, 49, 0.16);
+}
+
+.dropdown button {
+  display: grid;
+  width: 100%;
+  gap: 4px;
+  padding: 9px 10px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #172622;
+  text-align: right;
+  cursor: pointer;
+}
+
+.dropdown button:hover {
+  background: #eef6f3;
+}
+
+.dropdown small {
+  color: #627a74;
+  font-size: 0.78rem;
+}
+
+.print-value {
+  display: none;
+}
+
+.soft-button {
+  border: 1px solid #cbdad5;
+  border-radius: 7px;
+  padding: 10px 14px;
+  background: #ffffff;
+  color: #11635a;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.soft-button:hover {
+  border-color: #11635a;
+  background: #f0f7f4;
+}
+
+@media (max-width: 980px) {
+  .section-heading {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .buyer-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media print {
+  input,
+  textarea,
+  .dropdown,
+  .soft-button {
+    display: none !important;
+  }
+
+  .print-value {
+    display: inline;
+    min-height: 0;
+    color: #000000;
+    line-height: 1.35;
+    white-space: nowrap;
+    overflow-wrap: anywhere;
+  }
+
+  .buyer-grid {
+    grid-template-columns: 1.4fr 0.7fr 0.9fr 0.9fr 0.9fr 0.9fr;
+    gap: 6px;
+    align-items: stretch;
+  }
+
+  .buyer-grid label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    min-height: 28px;
+    padding: 3px 5px;
+    border: 1px solid #aebdb8;
+    border-radius: 0;
+    font-size: 0.66rem;
+    color: #263a35;
+    line-height: 1.35;
+    white-space: nowrap;
+  }
+
+  .buyer-grid .customer-picker {
+    grid-column: span 2;
+  }
+
+  .buyer-grid .full {
+    grid-column: 1 / -1;
+    min-height: 34px;
+    white-space: normal;
+  }
+
+  .buyer-grid .full .print-value {
+    white-space: normal;
+  }
+}

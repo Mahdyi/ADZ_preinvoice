@@ -1,0 +1,199 @@
+<main class="list-shell" [class.print-single-report]="listPrintMode === 'single'">
+  <section class="list-page">
+    <header class="list-header">
+      <button type="button" class="soft-button list-print-button" (click)="printListReport()">چاپ گزارش</button>
+      <div>
+        <p>گزارش پیش فاکتورها</p>
+        <h1>لیست پیش فاکتورها</h1>
+      </div>
+      <a class="primary-link" href="/">پیش فاکتور جدید</a>
+    </header>
+
+    <div class="list-table-wrap">
+      <table class="preinvoice-list-table">
+        <thead>
+          <tr>
+            <th>شماره</th>
+            <th>مشتری</th>
+            <th>کد مشتری</th>
+            <th>شناسه ملی</th>
+            <th>تلفن</th>
+            <th>تاریخ صدور</th>
+            <th>وضعیت</th>
+            <th>مبلغ کل</th>
+            <th class="action-column">عملیات</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let invoice of preinvoiceSummaries">
+            <td>{{ invoice.preinvoice_number }}</td>
+            <td>{{ invoice.customer_title }}</td>
+            <td>{{ invoice.customer_code || '-' }}</td>
+            <td>{{ invoice.customer_national_id || '-' }}</td>
+            <td>{{ invoice.customer_phone || '-' }}</td>
+            <td>{{ invoice.issue_date }}</td>
+            <td>{{ invoice.status }}</td>
+            <td>{{ formatMoney(+invoice.total) }} ریال</td>
+            <td class="action-column">
+              <div class="row-actions">
+                <button
+                  type="button"
+                  class="soft-button row-edit-button"
+                  (click)="editPreinvoice(invoice)">
+                  ویرایش
+                </button>
+              <button
+                type="button"
+                class="soft-button row-print-button"
+                [disabled]="printingPreinvoiceId === invoice.id"
+                (click)="printPreinvoiceReport(invoice)">
+                {{ printingPreinvoiceId === invoice.id ? 'در حال آماده سازی...' : 'چاپ گزارش' }}
+              </button>
+              </div>
+            </td>
+          </tr>
+          <tr *ngIf="!preinvoiceSummaries.length && !loadingPreinvoiceSummaries">
+            <td colspan="9" class="empty-list">پیش فاکتوری ثبت نشده است.</td>
+          </tr>
+          <tr *ngIf="loadingPreinvoiceSummaries">
+            <td colspan="9" class="empty-list">در حال دریافت...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="invoice-paper list-single-report" *ngIf="selectedListPreinvoice">
+    <section class="report-logos">
+      <img src="/adzir.png" alt="ابزار دقیق زنگان">
+      <img src="/naci.png" alt="NACI">
+    </section>
+
+    <header class="invoice-header">
+      <div class="brand-mark">
+        <img src="/mohr.png" alt="ADZ">
+      </div>
+      <div class="title-block">
+        <p>سامانه پیش فاکتور کالیبراسیون</p>
+        <h1>پیش فاکتور</h1>
+      </div>
+      <div class="meta-grid">
+        <label>
+          شماره
+          <span class="print-value">{{ selectedListPreinvoice.preinvoice_number }}</span>
+        </label>
+        <label>
+          تاریخ صدور
+          <span class="print-value">{{ selectedListPreinvoice.issue_date }}</span>
+        </label>
+      </div>
+    </header>
+
+    <section class="seller-strip">
+      <p>{{ sellerText }}</p>
+      <span>{{ socialText }}</span>
+    </section>
+
+    <section class="buyer-section">
+      <div class="section-heading">
+        <h2>مشخصات خریدار</h2>
+      </div>
+
+      <div class="buyer-grid">
+        <label class="customer-picker">
+          عنوان / شرکت
+          <span class="print-value">{{ selectedListPreinvoice.customer_title || '-' }}</span>
+        </label>
+        <label>
+          کد
+          <span class="print-value">{{ selectedListPreinvoice.customer_code || '-' }}</span>
+        </label>
+        <label>
+          شماره تماس
+          <span class="print-value">{{ selectedListPreinvoice.customer_phone || '-' }}</span>
+        </label>
+        <label>
+          کد پستی
+          <span class="print-value">{{ selectedListPreinvoice.customer_postal_code || '-' }}</span>
+        </label>
+        <label>
+          شناسه ملی
+          <span class="print-value">{{ selectedListPreinvoice.customer_national_id || '-' }}</span>
+        </label>
+        <label>
+          کد اقتصادی
+          <span class="print-value">{{ selectedListPreinvoice.customer_economic_code || '-' }}</span>
+        </label>
+        <label class="full">
+          آدرس
+          <span class="print-value">{{ selectedListPreinvoice.customer_address || '-' }}</span>
+        </label>
+      </div>
+    </section>
+
+    <section class="totals-section">
+      <table class="print-items-table">
+        <thead>
+          <tr>
+            <th>ردیف</th>
+            <th>نام تجهیزات</th>
+            <th>تعداد</th>
+            <th>توضیح</th>
+            <th>Cal.position</th>
+            <th>بهای واحد</th>
+            <th>مبلغ کل</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of selectedListPrintableRows; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ row.description || row.equipmentQuery || '-' }}</td>
+            <td>{{ row.quantity || 0 }}</td>
+            <td>{{ row.note || '-' }}</td>
+            <td>{{ row.calPosition || '-' }}</td>
+            <td>{{ formatMoney(row.unitPrice) }}</td>
+            <td>{{ formatMoney(rowTotal(row)) }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <app-preinvoice-totals
+        [subtotal]="selectedListSubtotal"
+        [vat]="selectedListVat"
+        [grandTotal]="selectedListGrandTotal"
+      ></app-preinvoice-totals>
+    </section>
+
+    <footer class="invoice-footer">
+      <section>
+        <h2>اطلاعات پرداخت</h2>
+        <p>بانک ملی به نام مهدی آذرآئین، شماره حساب 0104314355004، شماره شبا IR400170000000104314355004، شماره کارت 6037-9975-5468-9316</p>
+        <p> بانک ملی  به نام شرکت ابزار دقیق زنگان 0227555630005، شماره شبا IR440170000000227555630005، شماره كارت 2009-0008-9988-6037</p>
+        <p>بانک کارآفرین به نام شرکت ابزار دقیق زنگان، شماره حساب 03202594329600، شماره شبا IR710530000003202594329600، شماره کارت 6274-8888-0000-9767</p>
+      </section>
+
+      <section>
+        <h2>توضیحات</h2>
+        <ol>
+          <li>پس از واریز، تصویر برگه پرداخت را به واحد مالی شرکت ارسال فرمایید.</li>
+          <li>جهت صدور فاکتور رسمی و ثبت در سامانه مودیان، مشخصات حقوقی را ارسال فرمایید.</li>
+          <li> کلیه موارد فوق مربوط به خدمات کالیبراسیون می باشد و در زمان انجام فرآیند كالیبراسیون حضور مسئول فنی یا كنترل كیفیت و یا جانشین ایشان الزامی است.</li>
+          <li>هزینه حمل تجهیزات به عهده کارفرما بوده و ارسال وزنه مرجع برای كالیبراسیون باسكول تا 500 كیلوگرم به عهده این شركت می باشد.</li>
+          <li>تحویل تجهیزات كالیبره شده در محل آزمایشگاه كالیبراسیون بوده و ترجیحاً مسئول فنی شركت نسبت به تحویل اقدام نماید. ارسال تجهیزات به آدرس مشتری به صورت پسكرایه بوده و بنا به درخواست كتبی صورت می گیرد.</li>
+          <li>تجهیزات خارج از دامنه كاری به آزمایشگاه همكار دارای صلاحیت ارسال می شود.</li>
+          <li>هزینه های اعلامی بنابر لیست ارسال شده می باشد. درصورت کاهش تعداد دستگاه ها مبلغ قابل پرداخت بر تعداد تجهیزات تقسیم خواهد شد.</li>
+          <li>در صورت انجام فعالیت كالیبراسیون و مردود بودن تجهیز، و یا خارج از کالیبره بودن تجهیز، هزینه ی كالیبراسیون محاسبه می گردد. </li>
+          <li>در صورت نیاز هزینه اسكان كارشناسان به عهده ی كارفرما می باشد.</li>
+          <li>هزینه اعلامی برای محیط دمایی در 1 نقطه دمایی می باشد، درصورت افزایش تعداد نقاط دمایی هزینه اضافی لحاظ خواهد شد. </li>
+        </ol>
+      </section>
+
+      <div class="signature-row">
+        <span>مهر و امضاء خریدار</span>
+        <span>مهر و امضاء فروشنده</span>
+      </div>
+    </footer>
+  </section>
+</main>
+
+

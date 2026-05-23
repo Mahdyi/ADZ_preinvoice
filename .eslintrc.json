@@ -1,0 +1,103 @@
+{
+  "root": true,
+  "ignorePatterns": [
+    "projects/**/*"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "*.ts"
+      ],
+      "parserOptions": {
+        "project": [
+          "ui/tsconfig.json"
+        ],
+        "createDefaultProgram": true
+      },
+      "extends": [
+        "plugin:@angular-eslint/recommended",
+        "plugin:@angular-eslint/template/process-inline-templates",
+        "plugin:prettier/recommended"
+      ],
+      "plugins": [
+        "rxjs",
+        "rxjs-angular"
+      ],
+      "rules": {
+        "rxjs-angular/prefer-takeuntil": [
+          "error",
+          {
+            "alias": [
+              "untilDestroyed"
+            ],
+            "checkComplete": true,
+            "checkDecorators": [
+              "Component",
+              "Injectable"
+            ],
+            "checkDestroy": true
+          }
+        ],
+        "rxjs/no-async-subscribe": "error",
+        "rxjs/no-create": "error",
+        "rxjs/no-ignored-notifier": "error",
+        "rxjs/no-ignored-observable": "error",
+        "rxjs/no-ignored-replay-buffer": "error",
+        "rxjs/no-ignored-takewhile-value": "error",
+        "rxjs/no-implicit-any-catch": "error",
+        "rxjs/no-index": "error",
+        "rxjs/no-internal": "error",
+        "rxjs/no-nested-subscribe": "error",
+        "rxjs/no-redundant-notify": "error",
+        "rxjs/no-sharereplay": "error",
+        "rxjs/no-subject-unsubscribe": "error",
+        "rxjs/no-unbound-methods": "error",
+        "rxjs/no-unsafe-subject-next": "error",
+        "rxjs/no-unsafe-takeuntil": "error",
+        "no-var": "error",
+        "semi": "error",
+        "quotes": [
+          "error",
+          "single"
+        ],
+        "no-multi-spaces": "error",
+        "space-in-parens": "error",
+        "no-multiple-empty-lines": "error",
+        "prefer-const": "error",
+        "no-use-before-define": "error",
+        "@angular-eslint/directive-selector": [
+          "error",
+          {
+            "type": "attribute",
+            "prefix": "tse",
+            "style": "camelCase"
+          }
+        ],
+        "@angular-eslint/component-selector": [
+          "error",
+          {
+            "type": "element",
+            "prefix": "tse",
+            "style": "kebab-case"
+          }
+        ],
+        "@angular-eslint/prefer-standalone": "off",
+        "prettier/prettier": [
+          "error",
+          {
+            "endOfLine": "auto"
+          }
+        ]
+      }
+    },
+    {
+      "files": [
+        "*.html"
+      ],
+      "extends": [
+        "plugin:@angular-eslint/template/recommended"
+      ],
+      "rules": {}
+    }
+  ]
+}

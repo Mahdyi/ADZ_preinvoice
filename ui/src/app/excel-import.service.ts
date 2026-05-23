@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import ExcelJS from 'exceljs';
-import { CustomerDraft } from './customer.model';
+import { CustomerDraft } from './features/customers/models/customer.model';
 
 interface ParseResult {
   rows: CustomerDraft[];
@@ -11,10 +11,10 @@ const headerMap: Record<string, keyof CustomerDraft> = {
   'شناسه/کد ملی': 'national_id',
   'کد اقتصادی': 'economic_code',
   'کد پستی': 'postal_code',
-  'آدرس': 'address',
-  'تلفن': 'phone',
-  'کد': 'code',
-  'عنوان': 'title'
+  آدرس: 'address',
+  تلفن: 'phone',
+  کد: 'code',
+  عنوان: 'title',
 };
 
 @Injectable({ providedIn: 'root' })
@@ -70,7 +70,7 @@ export class ExcelImportService {
       address: null,
       phone: null,
       code: null,
-      title: ''
+      title: '',
     };
   }
 
@@ -83,7 +83,9 @@ export class ExcelImportService {
   }
 
   private cleanCell(value: unknown): string | null {
-    const text = String(value ?? '').replace(/\s+/g, ' ').trim();
+    const text = String(value ?? '')
+      .replace(/\s+/g, ' ')
+      .trim();
     return text ? text : null;
   }
 }

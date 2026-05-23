@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from '../environments/environment';
-import { Customer, CustomerDraft } from './customer.model';
+import { environment } from '../../../../environments/environment';
+import { Customer, CustomerDraft } from '../models/customer.model';
 
 @Injectable({ providedIn: 'root' })
 export class CustomerApiService {
@@ -18,7 +18,10 @@ export class CustomerApiService {
 
     const term = search.trim();
     if (term) {
-      params = params.set('or', `(title.ilike.*${term}*,code.ilike.*${term}*,national_id.ilike.*${term}*,phone.ilike.*${term}*)`);
+      params = params.set(
+        'or',
+        `(title.ilike.*${term}*,code.ilike.*${term}*,national_id.ilike.*${term}*,phone.ilike.*${term}*)`,
+      );
     }
 
     return this.http.get<Customer[]>(this.baseUrl, { params });
@@ -26,7 +29,7 @@ export class CustomerApiService {
 
   create(customer: CustomerDraft): Observable<Customer[]> {
     return this.http.post<Customer[]>(this.baseUrl, [this.clean(customer)], {
-      headers: this.returnHeaders()
+      headers: this.returnHeaders(),
     });
   }
 
@@ -34,7 +37,7 @@ export class CustomerApiService {
     const params = new HttpParams().set('id', `eq.${id}`);
     return this.http.patch<Customer[]>(this.baseUrl, this.clean(customer), {
       params,
-      headers: this.returnHeaders()
+      headers: this.returnHeaders(),
     });
   }
 
@@ -45,10 +48,17 @@ export class CustomerApiService {
 
   importByCode(rows: CustomerDraft[]): Observable<Customer[]> {
     const params = new HttpParams().set('on_conflict', 'code');
-    return this.http.post<Customer[]>(this.baseUrl, rows.map((row) => this.clean(row)), {
-      params,
-      headers: this.returnHeaders().set('Prefer', 'resolution=merge-duplicates,return=representation')
-    });
+    return this.http.post<Customer[]>(
+      this.baseUrl,
+      rows.map((row) => this.clean(row)),
+      {
+        params,
+        headers: this.returnHeaders().set(
+          'Prefer',
+          'resolution=merge-duplicates,return=representation',
+        ),
+      },
+    );
   }
 
   private returnHeaders(): HttpHeaders {
@@ -63,7 +73,7 @@ export class CustomerApiService {
       address: this.blankToNull(customer.address),
       phone: this.blankToNull(customer.phone),
       code: this.blankToNull(customer.code),
-      title: customer.title.trim()
+      title: customer.title.trim(),
     };
   }
 

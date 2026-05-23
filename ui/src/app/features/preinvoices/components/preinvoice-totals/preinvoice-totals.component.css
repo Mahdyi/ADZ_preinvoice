@@ -1,0 +1,45 @@
+:host {
+  display: block;
+}
+
+.print-total-box {
+  display: grid;
+  width: min(270px, 48%);
+  margin: 10px auto 0 0;
+  border: 1px solid #cbdad5;
+  background: #ffffff;
+}
+
+.print-total-box > div {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 5px 8px;
+  border-bottom: 1px solid #dce7e3;
+  line-height: 1.35;
+}
+
+.print-total-box > div:last-child {
+  border-bottom: 0;
+  background: #edf6f3;
+}
+
+.print-total-box span {
+  color: #172622;
+  font-size: 0.76rem;
+  text-align: right;
+}
+
+.print-total-box strong {
+  color: #11635a;
+  font-size: 0.98rem;
+  white-space: nowrap;
+}
+
+@media (max-width: 720px) {
+  .print-total-box {
+    width: 100%;
+  }
+}
