@@ -1,0 +1,143 @@
+:host {
+  display: contents;
+}
+
+.modal-backdrop {
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(14, 30, 26, 0.48);
+}
+
+.customer-modal {
+  width: min(760px, 100%);
+  max-height: min(720px, calc(100vh - 36px));
+  overflow-y: auto;
+  padding: 20px;
+  border: 1px solid #d8e4df;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 24px 70px rgba(10, 24, 21, 0.28);
+}
+
+.modal-header,
+.modal-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.modal-header {
+  margin-bottom: 16px;
+}
+
+.modal-actions {
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+.create-grid {
+  display: grid;
+  grid-template-columns: 1.4fr repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+label {
+  position: relative;
+  display: grid;
+  gap: 7px;
+  color: #39524d;
+  font-size: 0.9rem;
+}
+
+.full {
+  grid-column: 1 / -1;
+}
+
+input,
+textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #cbdad5;
+  border-radius: 7px;
+  padding: 10px 11px;
+  color: #14231f;
+  background: #fbfdfc;
+  font: inherit;
+}
+
+textarea {
+  resize: vertical;
+}
+
+button,
+.primary-button,
+.soft-button,
+.icon-button {
+  border: 0;
+  border-radius: 7px;
+  padding: 10px 14px;
+  font: inherit;
+  cursor: pointer;
+}
+
+.primary-button {
+  background: #11635a;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.soft-button {
+  background: #eaf4f1;
+  color: #16413b;
+}
+
+.icon-button {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  background: #fee8e7;
+  color: #9c221c;
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.icon-button.neutral {
+  background: #edf3f1;
+  color: #31524b;
+}
+
+@media (max-width: 980px) {
+  .create-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .modal-header,
+  .modal-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: stretch;
+  }
+
+  .customer-modal {
+    max-height: calc(100vh - 24px);
+    padding: 14px;
+  }
+
+  .primary-button,
+  .soft-button {
+    text-align: center;
+  }
+}
+
+@media print {
+  .modal-backdrop {
+    display: none !important;
+  }
+}

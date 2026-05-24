@@ -23,11 +23,29 @@ import {
 import { PreinvoiceApiService } from '../../services/preinvoice-api.service';
 import { PreinvoiceFacadeService } from '../../services/preinvoice-facade.service';
 import { BuyerInfoFormComponent } from '../../components/buyer-info-form/buyer-info-form.component';
+import { CreateCustomerModalComponent } from '../../components/create-customer-modal/create-customer-modal.component';
+import { CreateEquipmentModalComponent } from '../../components/create-equipment-modal/create-equipment-modal.component';
+import { PreinvoiceHeaderComponent } from '../../components/preinvoice-header/preinvoice-header.component';
+import { PreinvoiceItemRowComponent } from '../../components/preinvoice-item-row/preinvoice-item-row.component';
+import { PreinvoiceFooterComponent } from '../../components/preinvoice-footer/preinvoice-footer.component';
+import { PreinvoicePrintItemsTableComponent } from '../../components/preinvoice-print-items-table/preinvoice-print-items-table.component';
+import { PreinvoiceTotalsComponent } from '../../components/preinvoice-totals/preinvoice-totals.component';
 
 @Component({
   selector: 'app-preinvoice-editor-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, BuyerInfoFormComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    BuyerInfoFormComponent,
+    CreateCustomerModalComponent,
+    CreateEquipmentModalComponent,
+    PreinvoiceFooterComponent,
+    PreinvoiceHeaderComponent,
+    PreinvoiceItemRowComponent,
+    PreinvoicePrintItemsTableComponent,
+    PreinvoiceTotalsComponent,
+  ],
   templateUrl: './preinvoice-editor-page.component.html',
   styleUrl: '../../../../app.component.css',
 })
@@ -96,32 +114,16 @@ export class PreinvoiceEditorPageComponent implements OnInit {
     this.rows.forEach((row) => this.searchEquipment(row));
   }
 
-  get total(): number {
-    return this.rows.reduce((sum, row) => sum + this.rowTotal(row), 0);
-  }
-
   get printableRows(): InvoiceRow[] {
     return this.facade.printableRows(this.rows);
-  }
-
-  get selectedListPrintableRows(): InvoiceRow[] {
-    return this.facade.printableRows(this.selectedListRows);
   }
 
   get isEditMode(): boolean {
     return this.preinvoiceId !== null;
   }
 
-  get selectedListSubtotal(): number {
-    return this.facade.subtotal(this.selectedListRows);
-  }
-
-  get selectedListVat(): number {
-    return this.facade.vat(this.selectedListSubtotal);
-  }
-
-  get selectedListGrandTotal(): number {
-    return this.facade.grandTotal(this.selectedListSubtotal);
+  get currentSubtotal(): number {
+    return this.facade.subtotal(this.rows);
   }
 
   get newEquipmentRowNumber(): number {

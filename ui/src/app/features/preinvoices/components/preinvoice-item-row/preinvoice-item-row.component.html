@@ -1,0 +1,92 @@
+<span class="row-index">{{ index + 1 }}</span>
+
+<label class="equipment-picker">
+  <input
+    name="equipment{{ index }}"
+    autocomplete="off"
+    [ngModel]="row.equipmentQuery"
+    (ngModelChange)="updateEquipmentQuery($event)"
+    (focus)="equipmentSearch.emit(row)"
+    placeholder="نام تجهیزات"
+  />
+  <small *ngIf="row.measurementQuantity || row.location">
+    {{ row.measurementQuantity || '-' }} · {{ row.location || '-' }}
+  </small>
+  <span class="print-value item-description">{{
+    row.description || row.equipmentQuery || '-'
+  }}</span>
+
+  <div
+    class="dropdown equipment-menu"
+    *ngIf="row.equipmentOptions.length && row.equipmentQuery"
+  >
+    <button
+      type="button"
+      *ngFor="let item of row.equipmentOptions"
+      (click)="equipmentSelected.emit(item)"
+    >
+      <strong>{{ item.equipment_name }}</strong>
+      <small
+        >{{ item.sheet_name || '-' }} · {{ item.measurement_quantity || '-' }} ·
+        {{ formatMoney(item.price) }} ریال</small
+      >
+    </button>
+    <button
+      type="button"
+      class="create-option"
+      (click)="createEquipment.emit(row)"
+    >
+      <strong>افزودن تجهیزات جدید</strong>
+      <small>{{
+        row.equipmentQuery || row.description || 'ثبت در کاتالوگ تجهیزات'
+      }}</small>
+    </button>
+  </div>
+</label>
+
+<input
+  class="number-input"
+  name="quantity{{ index }}"
+  type="number"
+  min="0"
+  step="1"
+  [(ngModel)]="row.quantity"
+/>
+<span class="print-value">{{ row.quantity || 0 }}</span>
+
+<input name="note{{ index }}" [(ngModel)]="row.note" placeholder="توضیح" />
+<span class="print-value item-note">{{ row.note || '-' }}</span>
+
+<input name="cal{{ index }}" [(ngModel)]="row.calPosition" placeholder="_" />
+<span class="print-value">{{ row.calPosition || '-' }}</span>
+
+<input
+  class="number-input"
+  name="unitPrice{{ index }}"
+  type="number"
+  min="0"
+  step="1000"
+  [(ngModel)]="row.unitPrice"
+/>
+<span class="print-value money-print">{{ formatMoney(row.unitPrice) }}</span>
+
+<strong class="line-total">{{ formatMoney(lineTotal) }}</strong>
+
+<div class="row-tool-actions">
+  <button
+    type="button"
+    class="soft-button add-catalog-button"
+    title="ثبت تجهیزات جدید"
+    (click)="createEquipment.emit(row)"
+  >
+    ثبت تجهیزات
+  </button>
+  <button
+    type="button"
+    class="icon-button"
+    title="حذف ردیف"
+    (click)="remove.emit(index)"
+  >
+    ×
+  </button>
+</div>

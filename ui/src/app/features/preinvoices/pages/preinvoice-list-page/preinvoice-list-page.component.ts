@@ -22,12 +22,22 @@ import {
 } from '../../models/preinvoice.model';
 import { PreinvoiceApiService } from '../../services/preinvoice-api.service';
 import { PreinvoiceFacadeService } from '../../services/preinvoice-facade.service';
+import { PreinvoiceHeaderComponent } from '../../components/preinvoice-header/preinvoice-header.component';
+import { PreinvoiceFooterComponent } from '../../components/preinvoice-footer/preinvoice-footer.component';
+import { PreinvoicePrintItemsTableComponent } from '../../components/preinvoice-print-items-table/preinvoice-print-items-table.component';
 import { PreinvoiceTotalsComponent } from '../../components/preinvoice-totals/preinvoice-totals.component';
 
 @Component({
   selector: 'app-preinvoice-list-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, PreinvoiceTotalsComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    PreinvoiceFooterComponent,
+    PreinvoiceHeaderComponent,
+    PreinvoicePrintItemsTableComponent,
+    PreinvoiceTotalsComponent,
+  ],
   templateUrl: './preinvoice-list-page.component.html',
   styleUrl: '../../../../app.component.css',
 })
@@ -94,14 +104,6 @@ export class PreinvoiceListPageComponent implements OnInit {
 
     this.generateInvoiceNumber();
     this.rows.forEach((row) => this.searchEquipment(row));
-  }
-
-  get total(): number {
-    return this.rows.reduce((sum, row) => sum + this.rowTotal(row), 0);
-  }
-
-  get printableRows(): InvoiceRow[] {
-    return this.facade.printableRows(this.rows);
   }
 
   get selectedListPrintableRows(): InvoiceRow[] {

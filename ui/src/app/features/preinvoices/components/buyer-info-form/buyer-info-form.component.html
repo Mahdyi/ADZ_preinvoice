@@ -1,7 +1,9 @@
 <section class="buyer-section">
   <div class="section-heading">
     <h2>مشخصات خریدار</h2>
-    <button type="button" class="soft-button" (click)="createRequested.emit()">مشتری جدید</button>
+    <button type="button" class="soft-button" (click)="createRequested.emit()">
+      مشتری جدید
+    </button>
   </div>
 
   <div class="buyer-grid">
@@ -13,50 +15,94 @@
         [ngModel]="customerQuery"
         (ngModelChange)="customerQueryChange.emit($event)"
         (focus)="searchRequested.emit()"
-        placeholder="نام مشتری را جستجو کنید">
-      <span class="print-value">{{ selectedCustomer?.title || customerQuery || '-' }}</span>
+        placeholder="نام مشتری را جستجو کنید"
+      />
+      <span class="print-value">{{
+        selectedCustomer?.title || customerQuery || '-'
+      }}</span>
 
-      <div class="dropdown" *ngIf="customerOptions.length && customerQuery && !selectedCustomer">
-        <button type="button" *ngFor="let customer of customerOptions" (click)="customerSelected.emit(customer)">
+      <div
+        class="dropdown"
+        *ngIf="customerOptions.length && customerQuery && !selectedCustomer"
+      >
+        <button
+          type="button"
+          *ngFor="let customer of customerOptions"
+          (click)="customerSelected.emit(customer)"
+        >
           <strong>{{ customer.title }}</strong>
-          <small>{{ customer.code || 'بدون کد' }} · {{ customer.phone || 'بدون تلفن' }}</small>
+          <small
+            >{{ customer.code || 'بدون کد' }} ·
+            {{ customer.phone || 'بدون تلفن' }}</small
+          >
         </button>
       </div>
     </label>
 
     <label>
       کد
-      <input name="customerCode" [ngModel]="selectedCustomer?.code || ''" readonly>
+      <input
+        name="customerCode"
+        [ngModel]="selectedCustomer?.code || ''"
+        readonly
+      />
       <span class="print-value">{{ selectedCustomer?.code || '-' }}</span>
     </label>
 
     <label>
       شماره تماس
-      <input name="customerPhone" [ngModel]="selectedCustomer?.phone || ''" readonly>
+      <input
+        name="customerPhone"
+        [ngModel]="selectedCustomer?.phone || ''"
+        readonly
+      />
       <span class="print-value">{{ selectedCustomer?.phone || '-' }}</span>
     </label>
 
     <label>
       کد پستی
-      <input name="customerPostal" [ngModel]="selectedCustomer?.postal_code || ''" readonly>
-      <span class="print-value">{{ selectedCustomer?.postal_code || '-' }}</span>
+      <input
+        name="customerPostal"
+        [ngModel]="selectedCustomer?.postal_code || ''"
+        readonly
+      />
+      <span class="print-value">{{
+        selectedCustomer?.postal_code || '-'
+      }}</span>
     </label>
 
     <label>
       شناسه ملی
-      <input name="customerNational" [ngModel]="selectedCustomer?.national_id || ''" readonly>
-      <span class="print-value">{{ selectedCustomer?.national_id || '-' }}</span>
+      <input
+        name="customerNational"
+        [ngModel]="selectedCustomer?.national_id || ''"
+        readonly
+      />
+      <span class="print-value">{{
+        selectedCustomer?.national_id || '-'
+      }}</span>
     </label>
 
     <label>
       کد اقتصادی
-      <input name="customerEconomic" [ngModel]="selectedCustomer?.economic_code || ''" readonly>
-      <span class="print-value">{{ selectedCustomer?.economic_code || '-' }}</span>
+      <input
+        name="customerEconomic"
+        [ngModel]="selectedCustomer?.economic_code || ''"
+        readonly
+      />
+      <span class="print-value">{{
+        selectedCustomer?.economic_code || '-'
+      }}</span>
     </label>
 
     <label class="full">
       آدرس
-      <textarea name="customerAddress" rows="2" [ngModel]="selectedCustomer?.address || ''" readonly></textarea>
+      <textarea
+        name="customerAddress"
+        rows="2"
+        [ngModel]="selectedCustomer?.address || ''"
+        readonly
+      ></textarea>
       <span class="print-value">{{ selectedCustomer?.address || '-' }}</span>
     </label>
   </div>

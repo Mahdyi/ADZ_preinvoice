@@ -1,0 +1,64 @@
+<div class="modal-backdrop" (click)="closeRequested.emit()">
+  <section class="customer-modal" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>ثبت مشتری جدید</h2>
+      <button
+        type="button"
+        class="icon-button neutral"
+        title="بستن"
+        aria-label="بستن"
+        (click)="closeRequested.emit()"
+      >
+        ×
+      </button>
+    </div>
+
+    <div class="create-grid">
+      <label>
+        عنوان
+        <input name="newTitle" [(ngModel)]="customer.title" />
+      </label>
+      <label>
+        کد
+        <input name="newCode" [(ngModel)]="customer.code" />
+      </label>
+      <label>
+        شناسه ملی
+        <input name="newNational" [(ngModel)]="customer.national_id" />
+      </label>
+      <label>
+        کد اقتصادی
+        <input name="newEconomic" [(ngModel)]="customer.economic_code" />
+      </label>
+      <label>
+        کد پستی
+        <input name="newPostal" [(ngModel)]="customer.postal_code" />
+      </label>
+      <label>
+        تلفن
+        <input name="newPhone" [(ngModel)]="customer.phone" />
+      </label>
+      <label class="full">
+        آدرس
+        <textarea
+          name="newAddress"
+          rows="3"
+          [(ngModel)]="customer.address"
+        ></textarea>
+      </label>
+    </div>
+
+    <div class="modal-actions">
+      <button type="button" class="soft-button" (click)="closeRequested.emit()">
+        انصراف
+      </button>
+      <button
+        type="button"
+        class="primary-button"
+        (click)="saveRequested.emit()"
+      >
+        ذخیره و انتخاب مشتری
+      </button>
+    </div>
+  </section>
+</div>

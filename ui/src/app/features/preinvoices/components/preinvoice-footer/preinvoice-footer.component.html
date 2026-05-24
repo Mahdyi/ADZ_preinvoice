@@ -1,0 +1,19 @@
+<footer class="invoice-footer">
+  <section>
+    <h2>اطلاعات پرداخت</h2>
+    <p *ngIf="includePersonalBank">{{ personalPaymentLine }}</p>
+    <p *ngFor="let paymentLine of companyPaymentLines">{{ paymentLine }}</p>
+  </section>
+
+  <section>
+    <h2>توضیحات</h2>
+    <ol>
+      <li *ngFor="let term of terms">{{ term }}</li>
+    </ol>
+  </section>
+
+  <div class="signature-row">
+    <span>مهر و امضاء خریدار</span>
+    <span>مهر و امضاء فروشنده</span>
+  </div>
+</footer>

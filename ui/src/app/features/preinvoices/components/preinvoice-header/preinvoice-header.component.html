@@ -1,0 +1,44 @@
+<section class="report-logos">
+  <img src="/adzir.png" alt="ابزار دقیق زنگان" />
+  <img src="/naci.png" alt="NACI" />
+</section>
+
+<header class="invoice-header">
+  <div class="brand-mark">
+    <img src="/mohr.png" alt="ADZ" />
+  </div>
+  <div class="title-block">
+    <p>سامانه پیش فاکتور کالیبراسیون</p>
+    <h1>پیش فاکتور</h1>
+  </div>
+  <div class="meta-grid">
+    <label>
+      شماره
+      @if (editable) {
+        <input
+          name="preinvoiceNumber"
+          [ngModel]="preinvoiceNumber"
+          (ngModelChange)="preinvoiceNumberChange.emit($event)"
+        />
+      }
+      <span class="print-value">{{ preinvoiceNumber || '-' }}</span>
+    </label>
+    <label>
+      تاریخ صدور
+      @if (editable) {
+        <input
+          name="issueDate"
+          type="date"
+          [ngModel]="issueDate"
+          (ngModelChange)="issueDateChange.emit($event)"
+        />
+      }
+      <span class="print-value">{{ issueDate || '-' }}</span>
+    </label>
+  </div>
+</header>
+
+<section class="seller-strip">
+  <p>{{ sellerText }}</p>
+  <span>{{ socialText }}</span>
+</section>

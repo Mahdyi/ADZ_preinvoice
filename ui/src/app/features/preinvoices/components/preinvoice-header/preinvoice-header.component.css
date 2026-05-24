@@ -1,0 +1,243 @@
+:host {
+  display: block;
+}
+
+.report-logos {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 14px 22px 4px;
+}
+
+.report-logos img:first-child {
+  width: min(560px, 64%);
+  max-height: 96px;
+  object-fit: contain;
+}
+
+.report-logos img:last-child {
+  width: min(360px, 34%);
+  max-height: 110px;
+  object-fit: contain;
+}
+
+.invoice-header,
+.seller-strip {
+  padding: 18px 22px;
+}
+
+.invoice-header {
+  display: grid;
+  grid-template-columns: auto minmax(220px, 1fr) minmax(300px, auto);
+  align-items: center;
+  gap: 18px;
+  border-bottom: 3px solid #11635a;
+}
+
+.brand-mark {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  aspect-ratio: 1;
+  border-radius: 8px;
+  background: #11635a;
+  color: #ffffff;
+  font-weight: 800;
+}
+
+.brand-mark img {
+  width: 50px;
+  max-height: 50px;
+  object-fit: contain;
+}
+
+.title-block p,
+.title-block h1 {
+  margin: 0;
+}
+
+.title-block p {
+  color: #58706b;
+  font-size: 0.92rem;
+}
+
+.title-block h1 {
+  color: #10211d;
+  font-size: 2rem;
+}
+
+.meta-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+label {
+  position: relative;
+  display: grid;
+  gap: 7px;
+  color: #39524d;
+  font-size: 0.9rem;
+}
+
+input {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #cbdad5;
+  border-radius: 7px;
+  padding: 10px 11px;
+  color: #14231f;
+  background: #fbfdfc;
+  font: inherit;
+}
+
+.print-value {
+  display: none;
+}
+
+.seller-strip {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  color: #29423d;
+  background: #f6faf8;
+  border-bottom: 1px solid #dfe9e5;
+  font-size: 0.88rem;
+  line-height: 1.9;
+}
+
+.seller-strip span {
+  white-space: nowrap;
+  color: #11635a;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+@media (max-width: 980px) {
+  .invoice-header,
+  .seller-strip {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .invoice-header {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .invoice-header,
+  .seller-strip {
+    padding: 12px;
+  }
+
+  .report-logos {
+    gap: 10px;
+    padding: 10px 12px 2px;
+  }
+
+  .report-logos img:first-child {
+    width: 58%;
+  }
+
+  .report-logos img:last-child {
+    width: 38%;
+  }
+
+  .brand-mark {
+    width: 46px;
+  }
+
+  .brand-mark img {
+    width: 40px;
+    max-height: 40px;
+  }
+
+  .title-block h1 {
+    font-size: 1.45rem;
+  }
+
+  .meta-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .seller-strip {
+    display: grid;
+    gap: 6px;
+    line-height: 1.7;
+  }
+
+  .seller-strip span {
+    white-space: normal;
+  }
+}
+
+@media print {
+  .report-logos {
+    padding: 0 0 5px;
+    border-bottom: 1px solid #9dadab;
+  }
+
+  .report-logos img:first-child {
+    width: 60%;
+    max-height: 54px;
+  }
+
+  .report-logos img:last-child {
+    width: 34%;
+    max-height: 58px;
+  }
+
+  .invoice-header,
+  .seller-strip {
+    padding: 8px 0;
+  }
+
+  .invoice-header {
+    grid-template-columns: auto 1fr 220px;
+  }
+
+  .brand-mark {
+    background: transparent;
+    width: 45px;
+  }
+
+  .brand-mark img {
+    width: 45px;
+    max-height: 45px;
+  }
+
+  input {
+    display: none !important;
+  }
+
+  .print-value {
+    display: inline;
+    min-height: 0;
+    color: #000000;
+    line-height: 1.35;
+    white-space: nowrap;
+    overflow-wrap: anywhere;
+  }
+
+  .seller-strip {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.64rem;
+    line-height: 1.35;
+  }
+
+  .seller-strip p,
+  .seller-strip span {
+    min-width: 0;
+    white-space: nowrap;
+  }
+
+  .seller-strip span {
+    font-size: 0.64rem;
+    font-weight: 700;
+  }
+}

@@ -12,8 +12,11 @@ import { Customer } from '../../../customers/models/customer.model';
 })
 export class BuyerInfoFormComponent {
   @Input() customerQuery = '';
+  //The parent owns this value and gives it to the child.
   @Input() selectedCustomer: Customer | null = null;
+  // A customer that the user has already selected.
   @Input() customerOptions: Customer[] = [];
+  //This is the list of search results. What customer should I show in the dropdown?
 
   @Output() customerQueryChange = new EventEmitter<string>();
   @Output() searchRequested = new EventEmitter<void>();
