@@ -8,7 +8,7 @@ import {
 } from '../models/preinvoice.model';
 
 @Injectable({ providedIn: 'root' })
-export classPreinvoiceFacadeService {
+export class PreinvoiceFacadeService {
   readonly vatRate = 0.09;
 
   rowTotal(row: InvoiceRow): number {

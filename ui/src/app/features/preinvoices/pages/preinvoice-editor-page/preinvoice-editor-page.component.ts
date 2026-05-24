@@ -26,7 +26,7 @@ import { BuyerInfoFormComponent } from '../../components/buyer-info-form/buyer-i
 import { CreateCustomerModalComponent } from '../../components/create-customer-modal/create-customer-modal.component';
 import { CreateEquipmentModalComponent } from '../../components/create-equipment-modal/create-equipment-modal.component';
 import { PreinvoiceHeaderComponent } from '../../components/preinvoice-header/preinvoice-header.component';
-import { PreinvoiceItemRowComponent } from '../../components/preinvoice-item-row/preinvoice-item-row.component';
+import { PreinvoiceItemsTableComponent } from '../../components/preinvoice-items-table/preinvoice-items-table.component';
 import { PreinvoiceFooterComponent } from '../../components/preinvoice-footer/preinvoice-footer.component';
 import { PreinvoicePrintItemsTableComponent } from '../../components/preinvoice-print-items-table/preinvoice-print-items-table.component';
 import { PreinvoiceTotalsComponent } from '../../components/preinvoice-totals/preinvoice-totals.component';
@@ -42,7 +42,7 @@ import { PreinvoiceTotalsComponent } from '../../components/preinvoice-totals/pr
     CreateEquipmentModalComponent,
     PreinvoiceFooterComponent,
     PreinvoiceHeaderComponent,
-    PreinvoiceItemRowComponent,
+    PreinvoiceItemsTableComponent,
     PreinvoicePrintItemsTableComponent,
     PreinvoiceTotalsComponent,
   ],
@@ -81,6 +81,7 @@ export class PreinvoiceEditorPageComponent implements OnInit {
   selectedListPreinvoice: PreinvoiceSummary | null = null;
   selectedListRows: InvoiceRow[] = [];
   readonly vatRate = 0.09;
+  readonly rowTotalForTable = (row: InvoiceRow): number => this.rowTotal(row);
 
   readonly sellerText =
     'فروشنده: ابزار دقیق زنگان - زنجان، بلوار آزادی، دانشگاه علوم پزشکی، پارک علم و فن آوری سلامت، کدپستی: 4515613191، شناسه ملی: 10460108920';
@@ -255,6 +256,12 @@ export class PreinvoiceEditorPageComponent implements OnInit {
     this.showCreateEquipment = true;
   }
 
+  prepareNewEquipmentForNewRow(): void {
+    const emptyRow = this.rows.find((row) => this.isEmptyRow(row));
+    const targetRow = emptyRow ?? this.addRow();
+    this.prepareNewEquipment(targetRow);
+  }
+
   closeCreateEquipment(): void {
     this.showCreateEquipment = false;
     this.equipmentTargetRow = null;
@@ -309,10 +316,11 @@ export class PreinvoiceEditorPageComponent implements OnInit {
     }
   }
 
-  addRow(): void {
+  addRow(): InvoiceRow {
     const row = this.emptyRow();
     this.rows.push(row);
     this.searchEquipment(row);
+    return row;
   }
 
   removeRow(index: number): void {
@@ -504,6 +512,16 @@ export class PreinvoiceEditorPageComponent implements OnInit {
       measurementQuantity: '',
       location: '',
     };
+  }
+
+  private isEmptyRow(row: InvoiceRow): boolean {
+    return (
+      !row.equipmentQuery.trim() &&
+      !row.description.trim() &&
+      !row.note.trim() &&
+      !row.calPosition.trim() &&
+      !(Number(row.unitPrice) || 0)
+    );
   }
 
   private itemToInvoiceRow(item: PreinvoiceItem): InvoiceRow {

@@ -1,0 +1,45 @@
+<span class="row-index">{{ index + 1 }}</span>
+
+<label class="equipment-picker">
+  <input
+    name="receiptEquipment{{ index }}"
+    autocomplete="off"
+    [ngModel]="row.equipmentQuery"
+    (ngModelChange)="updateEquipmentQuery($event)"
+    (focus)="equipmentSearch.emit(row)"
+    placeholder="نام تجهیز"
+  />
+  <span class="print-value">{{ row.equipmentName || '-' }}</span>
+
+  <div
+    class="dropdown"
+    *ngIf="row.equipmentOptions.length && row.equipmentQuery"
+  >
+    <button
+      type="button"
+      *ngFor="let option of row.equipmentOptions"
+      (click)="equipmentSelected.emit(option)"
+    >
+      <strong>{{ option.equipmentName }}</strong>
+      <small>
+        {{ option.sheetName || '-' }} ·
+        {{ option.measurementQuantity || '-' }} · {{ option.location || '-' }}
+      </small>
+    </button>
+  </div>
+</label>
+
+<input name="manufacturer{{ index }}" [(ngModel)]="row.manufacturer" />
+<span class="print-value">{{ row.manufacturer || '-' }}</span>
+
+<input name="modelClass{{ index }}" [(ngModel)]="row.modelClass" />
+<span class="print-value">{{ row.modelClass || '-' }}</span>
+
+<input
+  name="requestedRange{{ index }}"
+  [(ngModel)]="row.requestedRange"
+/>
+<span class="print-value">{{ row.requestedRange || '-' }}</span>
+
+<input name="notes{{ index }}" [(ngModel)]="row.notes" />
+<span class="print-value notes-print">{{ row.notes || '-' }}</span>

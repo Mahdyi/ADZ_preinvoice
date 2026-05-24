@@ -1,0 +1,45 @@
+:host {
+  display: block;
+}
+
+.signature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  padding: 0 22px 18px;
+}
+
+.signature-grid div {
+  min-height: 78px;
+  padding: 12px;
+  border: 1px solid #cbdad5;
+  border-radius: 8px;
+  background: #fbfdfc;
+  color: #536b65;
+  line-height: 1.8;
+}
+
+@media (max-width: 720px) {
+  .signature-grid {
+    grid-template-columns: 1fr;
+    padding: 0 12px 18px;
+  }
+}
+
+@media print {
+  .signature-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+    padding: 4px 0 0;
+    font-size: 0.62rem;
+  }
+
+  .signature-grid div {
+    min-height: 52px;
+    padding: 6px;
+    border-radius: 0;
+    border-color: #9dadab;
+    background: #ffffff;
+    color: #000000;
+  }
+}

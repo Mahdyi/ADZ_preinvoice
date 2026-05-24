@@ -1,0 +1,48 @@
+:host {
+  display: block;
+}
+
+.receipt-terms {
+  padding: 4px 22px 12px;
+  color: #304943;
+  font-size: 0.82rem;
+  line-height: 1.9;
+}
+
+h2 {
+  margin: 0 0 6px;
+  color: #153d35;
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+
+ol {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding-right: 22px;
+}
+
+@media (max-width: 640px) {
+  .receipt-terms {
+    padding: 4px 12px 12px;
+  }
+}
+
+@media print {
+  .receipt-terms {
+    padding: 4px 0;
+    font-size: 0.6rem;
+    line-height: 1.35;
+  }
+
+  h2 {
+    margin-bottom: 2px;
+    font-size: 0.65rem;
+  }
+
+  ol {
+    gap: 0;
+    padding-right: 18px;
+  }
+}

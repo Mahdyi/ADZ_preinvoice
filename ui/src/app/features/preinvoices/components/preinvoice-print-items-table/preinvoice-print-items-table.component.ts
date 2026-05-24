@@ -8,6 +8,7 @@ import { PreinvoiceFacadeService } from '../../services/preinvoice-facade.servic
   standalone: true,
   imports: [CommonModule],
   templateUrl: './preinvoice-print-items-table.component.html',
+  styleUrl: './preinvoice-print-items-table.component.css',
 })
 export class PreinvoicePrintItemsTableComponent {
   @Input() rows: InvoiceRow[] = [];

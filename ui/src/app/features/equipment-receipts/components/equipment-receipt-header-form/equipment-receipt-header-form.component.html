@@ -1,0 +1,77 @@
+<section class="receipt-header-form">
+  <div class="receipt-title-row">
+    <div class="brand-space"></div>
+    <div class="title-block">
+      <h1>رسید دریافت تجهیزات</h1>
+      <p>
+        زنجان بلوار آزادی-دانشگاه علوم پزشکی-پارک علم و فن آوری سلامت
+        33786151-33788979-024
+      </p>
+    </div>
+    <div class="meta-grid compact">
+      <label>
+        ش. پذیرش:
+        <input name="acceptanceNumber" [(ngModel)]="header.acceptanceNumber" />
+        <span class="print-value">{{ header.acceptanceNumber || '-' }}</span>
+      </label>
+      <label>
+        تاریخ:
+        <input name="receiptDate" type="date" [(ngModel)]="header.date" />
+        <span class="print-value">{{ header.date || '-' }}</span>
+      </label>
+      <label>
+        ساعت:
+        <input name="receiptTime" type="time" [(ngModel)]="header.time" />
+        <span class="print-value">{{ header.time || '-' }}</span>
+      </label>
+    </div>
+  </div>
+
+  <div class="customer-grid">
+    <label>
+      شرکت:
+      <input name="company" [(ngModel)]="header.company" />
+      <span class="print-value">{{ header.company || '-' }}</span>
+    </label>
+    <label>
+      مسئول پیگیری:
+      <input name="followUpPerson" [(ngModel)]="header.followUpPerson" />
+      <span class="print-value">{{ header.followUpPerson || '-' }}</span>
+    </label>
+    <label>
+      شماره تماس:
+      <input name="phone" [(ngModel)]="header.phone" />
+      <span class="print-value">{{ header.phone || '-' }}</span>
+    </label>
+    <label>
+      نام مسئول فنی:
+      <input name="technicalManager" [(ngModel)]="header.technicalManager" />
+      <span class="print-value">{{ header.technicalManager || '-' }}</span>
+    </label>
+    <label class="address-field">
+      آدرس:
+      <input name="address" [(ngModel)]="header.address" />
+      <span class="print-value">{{ header.address || '-' }}</span>
+    </label>
+    <label>
+      کدپستی:
+      <input name="postalCode" [(ngModel)]="header.postalCode" />
+      <span class="print-value">{{ header.postalCode || '-' }}</span>
+    </label>
+    <label>
+      شناسه ملی:
+      <input name="nationalId" [(ngModel)]="header.nationalId" />
+      <span class="print-value">{{ header.nationalId || '-' }}</span>
+    </label>
+    <label>
+      شماره تماس مسئول فنی:
+      <input
+        name="technicalManagerPhone"
+        [(ngModel)]="header.technicalManagerPhone"
+      />
+      <span class="print-value">{{
+        header.technicalManagerPhone || '-'
+      }}</span>
+    </label>
+  </div>
+</section>

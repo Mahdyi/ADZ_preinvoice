@@ -1,0 +1,20 @@
+<main class="receipt-shell">
+  <section class="receipt-paper">
+    <app-equipment-receipt-header-form
+      [header]="receipt.header"
+    ></app-equipment-receipt-header-form>
+
+    <app-equipment-receipt-items-table
+      [rows]="receipt.rows"
+      (equipmentSearch)="searchEquipment($event)"
+      (equipmentSelected)="selectEquipment($event)"
+    ></app-equipment-receipt-items-table>
+
+    <section class="status" *ngIf="error">
+      <p class="error">{{ error }}</p>
+    </section>
+
+    <app-equipment-receipt-terms></app-equipment-receipt-terms>
+    <app-equipment-receipt-signatures></app-equipment-receipt-signatures>
+  </section>
+</main>

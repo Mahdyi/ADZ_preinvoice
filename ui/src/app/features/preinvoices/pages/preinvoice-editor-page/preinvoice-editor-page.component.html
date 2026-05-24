@@ -39,69 +39,43 @@
       (saveRequested)="createEquipment()"
     ></app-create-equipment-modal>
 
-    <section class="items-section">
-      <div class="section-heading">
-        <h2>فهرست تجهیزات</h2>
-        <button type="button" class="soft-button" (click)="addRow()">
-          افزودن ردیف
-        </button>
-      </div>
+    <app-preinvoice-items-table
+      [rows]="rows"
+      [rowTotal]="rowTotalForTable"
+      (newEquipmentRequested)="prepareNewEquipmentForNewRow()"
+      (equipmentSearch)="searchEquipment($event)"
+      (equipmentSelected)="selectEquipment($event.row, $event.item)"
+      (createEquipment)="prepareNewEquipment($event)"
+      (addRowRequested)="addRow()"
+      (removeRowRequested)="removeRow($event)"
+    ></app-preinvoice-items-table>
 
-      <div class="items-table">
-        <div class="item-row item-head">
-          <span>ردیف</span>
-          <span>نام تجهیزات</span>
-          <span>تعداد</span>
-          <span>توضیح</span>
-          <span>Cal.position</span>
-          <span>بهای واحد</span>
-          <span>مبلغ کل</span>
-          <span></span>
+    <section class="totals-section editor-totals-section">
+      <div class="editor-summary-row">
+        <div class="action-row">
+          <button
+            type="button"
+            class="primary-button"
+            [disabled]="loadingPreinvoice || (saving && !message)"
+            (click)="savePreinvoice()"
+          >
+            {{
+              loadingPreinvoice
+                ? 'در حال دریافت...'
+                : saving && !message
+                  ? 'در حال ذخیره...'
+                  : isEditMode
+                    ? 'به‌روزرسانی پیش فاکتور'
+                    : 'ذخیره پیش فاکتور'
+            }}
+          </button>
         </div>
 
-        <ng-template ngFor let-row [ngForOf]="rows" let-i="index">
-          <app-preinvoice-item-row
-            [class.empty-print-row]="
-              !row.description.trim() &&
-              !row.note.trim() &&
-              !row.equipmentQuery.trim()
-            "
-            [row]="row"
-            [index]="i"
-            [lineTotal]="rowTotal(row)"
-            (equipmentSearch)="searchEquipment($event)"
-            (equipmentSelected)="selectEquipment(row, $event)"
-            (createEquipment)="prepareNewEquipment($event)"
-            (remove)="removeRow($event)"
-          ></app-preinvoice-item-row>
-        </ng-template>
-      </div>
-    </section>
-
-    <section class="totals-section">
-      <app-preinvoice-totals
-        [subtotal]="currentSubtotal"
-        [grandTotal]="currentSubtotal"
-        [showVat]="false"
-      ></app-preinvoice-totals>
-
-      <div class="action-row">
-        <button
-          type="button"
-          class="primary-button"
-          [disabled]="loadingPreinvoice || (saving && !message)"
-          (click)="savePreinvoice()"
-        >
-          {{
-            loadingPreinvoice
-              ? 'در حال دریافت...'
-              : saving && !message
-                ? 'در حال ذخیره...'
-                : isEditMode
-                  ? 'به‌روزرسانی پیش فاکتور'
-                  : 'ذخیره پیش فاکتور'
-          }}
-        </button>
+        <app-preinvoice-totals
+          [subtotal]="currentSubtotal"
+          [grandTotal]="currentSubtotal"
+          [showVat]="false"
+        ></app-preinvoice-totals>
       </div>
 
       <tse-preinvoice-print-items-table

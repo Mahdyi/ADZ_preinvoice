@@ -1,0 +1,40 @@
+<section class="items-section">
+  <div class="section-heading">
+    <h2>فهرست تجهیزات</h2>
+    <button
+      type="button"
+      class="soft-button"
+      (click)="newEquipmentRequested.emit()"
+    >
+      ثبت تجهیز جدید
+    </button>
+  </div>
+
+  <div class="items-table">
+    <div class="item-row item-head">
+      <span>ردیف</span>
+      <span>نام تجهیزات</span>
+      <span>تعداد</span>
+      <span>توضیح</span>
+      <span>Cal.position</span>
+      <span>بهای واحد</span>
+      <span>مبلغ کل</span>
+      <span></span>
+    </div>
+
+    <ng-template ngFor let-row [ngForOf]="rows" let-i="index">
+      <app-preinvoice-item-row
+        [class.empty-print-row]="isEmptyPrintRow(row)"
+        [row]="row"
+        [index]="i"
+        [isLast]="i === rows.length - 1"
+        [lineTotal]="rowTotal(row)"
+        (equipmentSearch)="equipmentSearch.emit($event)"
+        (equipmentSelected)="equipmentSelected.emit({ row, item: $event })"
+        (createEquipment)="createEquipment.emit($event)"
+        (addRowRequested)="addRowRequested.emit()"
+        (remove)="removeRowRequested.emit($event)"
+      ></app-preinvoice-item-row>
+    </ng-template>
+  </div>
+</section>

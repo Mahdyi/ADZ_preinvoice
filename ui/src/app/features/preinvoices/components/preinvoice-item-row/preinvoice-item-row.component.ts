@@ -16,6 +16,7 @@ export class PreinvoiceItemRowComponent {
   //Parent, give me the actual row data.
   @Input({ required: true }) index!: number;
   //Parent tell me which row I am.
+  @Input() isLast = false;
   @Input() lineTotal = 0;
   //Parent, give me the calculated total for this row.
 
@@ -25,6 +26,7 @@ export class PreinvoiceItemRowComponent {
   //Parent, the user selected an equipment from the dropdown, please update this row with the equipment data.
   @Output() createEquipment = new EventEmitter<InvoiceRow>();
   //Parent, the user wants to add this equipment to the equipment database.
+  @Output() addRowRequested = new EventEmitter<void>();
   @Output() remove = new EventEmitter<number>();
 
   updateEquipmentQuery(value: string): void {

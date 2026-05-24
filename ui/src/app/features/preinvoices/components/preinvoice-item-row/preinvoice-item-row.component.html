@@ -26,10 +26,10 @@
       (click)="equipmentSelected.emit(item)"
     >
       <strong>{{ item.equipment_name }}</strong>
-      <small
-        >{{ item.sheet_name || '-' }} · {{ item.measurement_quantity || '-' }} ·
-        {{ formatMoney(item.price) }} ریال</small
-      >
+      <small>
+        {{ item.sheet_name || '-' }} · {{ item.measurement_quantity || '-' }} ·
+        {{ formatMoney(item.price) }} ریال
+      </small>
     </button>
     <button
       type="button"
@@ -74,12 +74,13 @@
 
 <div class="row-tool-actions">
   <button
+    *ngIf="isLast"
     type="button"
-    class="soft-button add-catalog-button"
-    title="ثبت تجهیزات جدید"
-    (click)="createEquipment.emit(row)"
+    class="soft-button add-row-button"
+    title="افزودن ردیف"
+    (click)="addRowRequested.emit()"
   >
-    ثبت تجهیزات
+    افزودن ردیف
   </button>
   <button
     type="button"

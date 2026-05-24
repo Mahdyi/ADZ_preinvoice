@@ -1,0 +1,21 @@
+<section class="receipt-items">
+  <div class="receipt-table">
+    <div class="receipt-row receipt-head">
+      <span>ردیف</span>
+      <span>نام تجهیز</span>
+      <span>سازنده</span>
+      <span>مدل و کلاس</span>
+      <span>گستره درخواستی</span>
+      <span>توضیحات</span>
+    </div>
+
+    <ng-template ngFor let-row [ngForOf]="rows" let-i="index">
+      <app-equipment-receipt-item-row
+        [row]="row"
+        [index]="i"
+        (equipmentSearch)="equipmentSearch.emit($event)"
+        (equipmentSelected)="equipmentSelected.emit({ row, option: $event })"
+      ></app-equipment-receipt-item-row>
+    </ng-template>
+  </div>
+</section>

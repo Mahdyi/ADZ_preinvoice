@@ -458,6 +458,12 @@ textarea {
   white-space: nowrap;
 }
 
+.add-row-button {
+  min-height: 40px;
+  padding: 8px 10px;
+  white-space: nowrap;
+}
+
 button,
 .primary-button,
 .soft-button,
@@ -503,6 +509,25 @@ button:disabled {
 .totals-section {
   border-top: 2px solid #d7e5e0;
   background: #f8fbfa;
+}
+
+.editor-totals-section {
+  display: block;
+}
+
+.editor-summary-row {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+}
+
+.editor-summary-row app-preinvoice-totals {
+  display: block;
+  width: min(270px, 100%);
+  margin-left: 126px;
 }
 
 .totals-section div {
@@ -749,6 +774,16 @@ button:disabled {
 
   .totals-section {
     align-items: stretch;
+  }
+
+  .editor-summary-row {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .editor-summary-row app-preinvoice-totals {
+    width: 100%;
+    margin-left: 0;
   }
 
   .signature-row {

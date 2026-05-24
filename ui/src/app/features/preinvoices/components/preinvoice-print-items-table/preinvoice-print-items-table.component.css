@@ -1,0 +1,69 @@
+:host {
+  display: none;
+}
+
+.print-items-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: 0.76rem;
+}
+
+.print-items-table th,
+.print-items-table td {
+  border: 1px solid #9dadab;
+  padding: 4px 5px;
+  vertical-align: top;
+  text-align: right;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+.print-items-table th {
+  background: #edf3f1;
+  color: #1c332e;
+}
+
+.print-items-table th:nth-child(1),
+.print-items-table td:nth-child(1) {
+  width: 28px;
+  text-align: center;
+}
+
+.print-items-table th:nth-child(2),
+.print-items-table td:nth-child(2) {
+  width: 32%;
+}
+
+.print-items-table th:nth-child(3),
+.print-items-table td:nth-child(3) {
+  width: 42px;
+  text-align: center;
+}
+
+.print-items-table th:nth-child(4),
+.print-items-table td:nth-child(4) {
+  width: 24%;
+}
+
+.print-items-table th:nth-child(5),
+.print-items-table td:nth-child(5) {
+  width: 65px;
+}
+
+.print-items-table th:nth-child(6),
+.print-items-table td:nth-child(6),
+.print-items-table th:nth-child(7),
+.print-items-table td:nth-child(7) {
+  width: 80px;
+  direction: ltr;
+  text-align: left;
+}
+
+@media print {
+  :host {
+    display: table;
+    width: 100%;
+  }
+}
