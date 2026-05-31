@@ -1,93 +1,93 @@
 <span class="row-index">{{ index + 1 }}</span>
 
 <label class="equipment-picker">
-  <input
+  <p-autocomplete
+    inputId="equipment{{ index }}"
     name="equipment{{ index }}"
-    autocomplete="off"
-    [ngModel]="row.equipmentQuery"
-    (ngModelChange)="updateEquipmentQuery($event)"
-    (focus)="equipmentSearch.emit(row)"
+    optionLabel="equipment_name"
+    [suggestions]="row.equipmentOptions"
+    [ngModel]="equipmentAutocompleteValue"
+    [forceSelection]="false"
+    [completeOnFocus]="true"
     placeholder="نام تجهیزات"
-  />
+    emptyMessage="موردی یافت نشد"
+    (ngModelChange)="handleEquipmentModelChange($event)"
+    (completeMethod)="completeEquipment($event)"
+    (onFocus)="equipmentSearch.emit(row)"
+    (onKeyUp)="handleEquipmentKeyUp($event)"
+    (onBlur)="selectMatchingEquipmentQuery()"
+    (onSelect)="selectEquipment($event)"
+  >
+    <ng-template let-item pTemplate="item">
+      <div class="option-item">
+        <strong>{{ item.equipment_name }}</strong>
+        <small>
+          {{ item.sheet_name || '-' }} · {{ item.measurement_quantity || '-' }}
+          · {{ formatMoney(item.price) }} ریال
+        </small>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <button type="button" class="create-option" (click)="createEquipment.emit(row)">
+        <strong>افزودن تجهیزات جدید</strong>
+        <small>{{
+          row.equipmentQuery || row.description || 'ثبت در کاتالوگ تجهیزات'
+        }}</small>
+      </button>
+    </ng-template>
+  </p-autocomplete>
   <small *ngIf="row.measurementQuantity || row.location">
     {{ row.measurementQuantity || '-' }} · {{ row.location || '-' }}
   </small>
   <span class="print-value item-description">{{
     row.description || row.equipmentQuery || '-'
   }}</span>
-
-  <div
-    class="dropdown equipment-menu"
-    *ngIf="row.equipmentOptions.length && row.equipmentQuery"
-  >
-    <button
-      type="button"
-      *ngFor="let item of row.equipmentOptions"
-      (click)="equipmentSelected.emit(item)"
-    >
-      <strong>{{ item.equipment_name }}</strong>
-      <small>
-        {{ item.sheet_name || '-' }} · {{ item.measurement_quantity || '-' }} ·
-        {{ formatMoney(item.price) }} ریال
-      </small>
-    </button>
-    <button
-      type="button"
-      class="create-option"
-      (click)="createEquipment.emit(row)"
-    >
-      <strong>افزودن تجهیزات جدید</strong>
-      <small>{{
-        row.equipmentQuery || row.description || 'ثبت در کاتالوگ تجهیزات'
-      }}</small>
-    </button>
-  </div>
 </label>
 
-<input
-  class="number-input"
-  name="quantity{{ index }}"
-  type="number"
-  min="0"
-  step="1"
+<p-inputnumber
+  inputId="quantity{{ index }}"
+  styleClass="number-input"
+  [min]="0"
+  [step]="1"
   [(ngModel)]="row.quantity"
-/>
+></p-inputnumber>
 <span class="print-value">{{ row.quantity || 0 }}</span>
 
-<input name="note{{ index }}" [(ngModel)]="row.note" placeholder="توضیح" />
+<input pInputText name="note{{ index }}" [(ngModel)]="row.note" placeholder="توضیح" />
 <span class="print-value item-note">{{ row.note || '-' }}</span>
 
-<input name="cal{{ index }}" [(ngModel)]="row.calPosition" placeholder="_" />
+<input pInputText name="cal{{ index }}" [(ngModel)]="row.calPosition" placeholder="_" />
 <span class="print-value">{{ row.calPosition || '-' }}</span>
 
-<input
-  class="number-input"
-  name="unitPrice{{ index }}"
-  type="number"
-  min="0"
-  step="1000"
+<p-inputnumber
+  inputId="unitPrice{{ index }}"
+  styleClass="number-input"
+  [min]="0"
+  [step]="1000"
   [(ngModel)]="row.unitPrice"
-/>
+></p-inputnumber>
 <span class="print-value money-print">{{ formatMoney(row.unitPrice) }}</span>
 
 <strong class="line-total">{{ formatMoney(lineTotal) }}</strong>
 
 <div class="row-tool-actions">
-  <button
+  <p-button
     *ngIf="isLast"
     type="button"
-    class="soft-button add-row-button"
+    styleClass="add-row-button"
     title="افزودن ردیف"
-    (click)="addRowRequested.emit()"
-  >
-    افزودن ردیف
-  </button>
-  <button
+    label="افزودن ردیف"
+    icon="pi pi-plus"
+    severity="secondary"
+    [outlined]="true"
+    (onClick)="addRowRequested.emit()"
+  ></p-button>
+  <p-button
     type="button"
-    class="icon-button"
     title="حذف ردیف"
-    (click)="remove.emit(index)"
-  >
-    ×
-  </button>
+    icon="pi pi-times"
+    severity="danger"
+    [outlined]="true"
+    (onClick)="remove.emit(index)"
+  ></p-button>
 </div>

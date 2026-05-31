@@ -2,6 +2,9 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { finalize, firstValueFrom } from 'rxjs';
+import { ButtonModule } from 'primeng/button';
+import { MessageModule } from 'primeng/message';
+import { TableModule } from 'primeng/table';
 import { CustomerApiService } from '../../../customers/services/customer-api.service';
 import {
   Customer,
@@ -33,6 +36,9 @@ import { PreinvoiceTotalsComponent } from '../../components/preinvoice-totals/pr
   imports: [
     CommonModule,
     FormsModule,
+    ButtonModule,
+    MessageModule,
+    TableModule,
     PreinvoiceFooterComponent,
     PreinvoiceHeaderComponent,
     PreinvoicePrintItemsTableComponent,
@@ -177,6 +183,15 @@ export class PreinvoiceListPageComponent implements OnInit {
       .subscribe({
         next: (customers) => {
           this.customerOptions = customers;
+          const exactCustomer = customers.find(
+            (customer) =>
+              this.normalizedText(customer.title) ===
+              this.normalizedText(this.customerQuery),
+          );
+
+          if (!this.selectedCustomer && exactCustomer) {
+            this.selectCustomer(exactCustomer);
+          }
         },
         error: () => (this.error = 'دریافت مشتریان انجام نشد.'),
       });
@@ -291,12 +306,24 @@ export class PreinvoiceListPageComponent implements OnInit {
 
   searchEquipment(row: InvoiceRow): void {
     this.equipment.search(row.equipmentQuery).subscribe({
-      next: (items) => (row.equipmentOptions = items),
+      next: (items) => {
+        row.equipmentOptions = items;
+        const exactItem = items.find(
+          (item) =>
+            this.normalizedText(item.equipment_name) ===
+            this.normalizedText(row.equipmentQuery),
+        );
+
+        if (exactItem) {
+          this.selectEquipment(row, exactItem);
+        }
+      },
       error: () => (this.error = 'دریافت فهرست تجهیزات انجام نشد.'),
     });
   }
 
   selectEquipment(row: InvoiceRow, item: EquipmentCatalogItem): void {
+    row.selectedEquipment = item;
     row.description = item.equipment_name;
     row.equipmentQuery = item.equipment_name;
     row.unitPrice = Number(item.price) || 0;
@@ -496,6 +523,7 @@ export class PreinvoiceListPageComponent implements OnInit {
     return {
       equipmentQuery: '',
       equipmentOptions: [],
+      selectedEquipment: null,
       description: '',
       quantity: 1,
       note: '',
@@ -531,5 +559,9 @@ export class PreinvoiceListPageComponent implements OnInit {
 
   private today(): string {
     return new Date().toISOString().slice(0, 10);
+  }
+
+  private normalizedText(value: string): string {
+    return value.trim().replaceAll('ك', 'ک').replaceAll('ي', 'ی');
   }
 }

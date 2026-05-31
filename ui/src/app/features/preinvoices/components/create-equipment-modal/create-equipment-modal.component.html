@@ -1,88 +1,91 @@
-<div class="modal-backdrop" (click)="closeRequested.emit()">
-  <section class="customer-modal" (click)="$event.stopPropagation()">
-    <div class="modal-header">
-      <h2>ثبت تجهیز جدید</h2>
-      <button
-        type="button"
-        class="icon-button neutral"
-        title="بستن"
-        aria-label="بستن"
-        (click)="closeRequested.emit()"
-      >
-        ×
-      </button>
-    </div>
+<p-dialog
+  header="ثبت تجهیز جدید"
+  [modal]="true"
+  [visible]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [style]="{ width: 'min(960px, calc(100vw - 32px))' }"
+  styleClass="adz-prime-dialog"
+  (onHide)="closeRequested.emit()"
+>
+  <div class="create-grid equipment-create-grid" dir="rtl">
+    <label>
+      ردیف
+      <input pInputText name="newEquipmentRowNumber" [ngModel]="rowNumber" readonly />
+    </label>
+    <label>
+      نام تجهیزات
+      <input
+        pInputText
+        name="newEquipmentName"
+        [(ngModel)]="equipment.equipment_name"
+      />
+    </label>
+    <label>
+      تعداد
+      <p-inputnumber
+        inputId="newEquipmentQuantity"
+        [min]="0"
+        [step]="1"
+        [ngModel]="quantity"
+        (ngModelChange)="quantityChange.emit($event || 0)"
+      ></p-inputnumber>
+    </label>
+    <label>
+      توضیح
+      <input
+        pInputText
+        name="newEquipmentNote"
+        [ngModel]="note"
+        (ngModelChange)="noteChange.emit($event)"
+      />
+    </label>
+    <label>
+      Cal.position
+      <input
+        pInputText
+        name="newEquipmentCal"
+        [ngModel]="calPosition"
+        (ngModelChange)="calPositionChange.emit($event)"
+      />
+    </label>
+    <label>
+      بهای واحد
+      <p-inputnumber
+        inputId="newEquipmentPrice"
+        [min]="0"
+        [step]="1000"
+        [(ngModel)]="equipment.price"
+      ></p-inputnumber>
+    </label>
+    <label>
+      مبلغ کل
+      <input
+        pInputText
+        class="number-input"
+        name="newEquipmentLineTotal"
+        [ngModel]="lineTotal"
+        readonly
+      />
+    </label>
+  </div>
 
-    <div class="create-grid equipment-create-grid">
-      <label>
-        ردیف
-        <input name="newEquipmentRowNumber" [ngModel]="rowNumber" readonly />
-      </label>
-      <label>
-        نام تجهیزات
-        <input name="newEquipmentName" [(ngModel)]="equipment.equipment_name" />
-      </label>
-      <label>
-        تعداد
-        <input
-          class="number-input"
-          name="newEquipmentQuantity"
-          type="number"
-          min="0"
-          step="1"
-          [ngModel]="quantity"
-          (ngModelChange)="quantityChange.emit($event)"
-        />
-      </label>
-      <label>
-        توضیح
-        <input
-          name="newEquipmentNote"
-          [ngModel]="note"
-          (ngModelChange)="noteChange.emit($event)"
-        />
-      </label>
-      <label>
-        Cal.position
-        <input
-          name="newEquipmentCal"
-          [ngModel]="calPosition"
-          (ngModelChange)="calPositionChange.emit($event)"
-        />
-      </label>
-      <label>
-        بهای واحد
-        <input
-          class="number-input"
-          name="newEquipmentPrice"
-          type="number"
-          min="0"
-          step="1000"
-          [(ngModel)]="equipment.price"
-        />
-      </label>
-      <label>
-        مبلغ کل
-        <input
-          class="number-input"
-          name="newEquipmentLineTotal"
-          [ngModel]="lineTotal"
-          readonly
-        />
-      </label>
-    </div>
-
-    <div class="modal-actions">
-      <button type="button" class="soft-button" (click)="closeRequested.emit()">
-        انصراف
-      </button>
-      <button
+  <ng-template pTemplate="footer">
+    <div class="modal-actions" dir="rtl">
+      <p-button
         type="button"
-        class="primary-button"
-        (click)="saveRequested.emit()"
-      >
-        ذخیره و انتخاب تجهیز
-      </button>
+        label="انصراف"
+        severity="secondary"
+        [outlined]="true"
+        icon="pi pi-times"
+        (onClick)="closeRequested.emit()"
+      ></p-button>
+      <p-button
+        type="button"
+        label="ذخیره و انتخاب تجهیز"
+        icon="pi pi-save"
+        (onClick)="saveRequested.emit()"
+      ></p-button>
     </div>
-  </section>
-</div>
+  </ng-template>
+</p-dialog>

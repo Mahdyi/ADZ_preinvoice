@@ -53,6 +53,7 @@ export class PreinvoiceFacadeService {
     return {
       equipmentQuery: '',
       equipmentOptions: [],
+      selectedEquipment: null,
       description: '',
       quantity: 1,
       note: '',
@@ -67,6 +68,7 @@ export class PreinvoiceFacadeService {
     return {
       equipmentQuery: item.description,
       equipmentOptions: [],
+      selectedEquipment: null,
       description: item.description,
       quantity: Number(item.quantity) || 0,
       note: item.note ?? '',

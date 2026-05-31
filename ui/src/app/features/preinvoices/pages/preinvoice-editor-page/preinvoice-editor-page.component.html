@@ -53,13 +53,11 @@
     <section class="totals-section editor-totals-section">
       <div class="editor-summary-row">
         <div class="action-row">
-          <button
+          <p-button
             type="button"
-            class="primary-button"
+            icon="pi pi-save"
             [disabled]="loadingPreinvoice || (saving && !message)"
-            (click)="savePreinvoice()"
-          >
-            {{
+            [label]="
               loadingPreinvoice
                 ? 'در حال دریافت...'
                 : saving && !message
@@ -67,8 +65,9 @@
                   : isEditMode
                     ? 'به‌روزرسانی پیش فاکتور'
                     : 'ذخیره پیش فاکتور'
-            }}
-          </button>
+            "
+            (onClick)="savePreinvoice()"
+          ></p-button>
         </div>
 
         <app-preinvoice-totals
@@ -84,8 +83,8 @@
     </section>
 
     <section class="status" *ngIf="message || error">
-      <p class="success" *ngIf="message">{{ message }}</p>
-      <p class="error" *ngIf="error">{{ error }}</p>
+      <p-message *ngIf="message" severity="success" [text]="message"></p-message>
+      <p-message *ngIf="error" severity="error" [text]="error"></p-message>
     </section>
 
     <app-preinvoice-footer></app-preinvoice-footer>

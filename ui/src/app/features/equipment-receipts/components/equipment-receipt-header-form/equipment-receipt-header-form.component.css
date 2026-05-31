@@ -11,16 +11,24 @@
 
 .receipt-title-row {
   display: grid;
-  grid-template-columns: 120px minmax(280px, 1fr) 320px;
+  grid-template-columns: auto minmax(280px, 1fr) 320px;
   align-items: center;
-  gap: 14px;
+  gap: 18px;
 }
 
-.brand-space {
-  min-height: 64px;
-  border: 1px solid #dbe7e3;
+.brand-mark {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  aspect-ratio: 1;
   border-radius: 8px;
-  background: #f7faf9;
+  background: #11635a;
+}
+
+.brand-mark img {
+  width: 50px;
+  max-height: 50px;
+  object-fit: contain;
 }
 
 .title-block {
@@ -104,13 +112,18 @@ input {
   }
 
   .receipt-title-row {
-    grid-template-columns: 95px 1fr 190px;
+    grid-template-columns: auto 1fr 190px;
     gap: 6px;
   }
 
-  .brand-space {
-    min-height: 44px;
-    border-radius: 0;
+  .brand-mark {
+    width: 45px;
+    background: transparent;
+  }
+
+  .brand-mark img {
+    width: 45px;
+    max-height: 45px;
   }
 
   h1 {

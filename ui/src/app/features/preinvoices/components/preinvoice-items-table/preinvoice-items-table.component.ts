@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ButtonModule } from 'primeng/button';
 import { EquipmentCatalogItem } from '../../../equipment/models/equipment.model';
 import { InvoiceRow } from '../../models/preinvoice.model';
 import { PreinvoiceItemRowComponent } from '../preinvoice-item-row/preinvoice-item-row.component';
@@ -12,7 +13,7 @@ export interface EquipmentSelectedEvent {
 @Component({
   selector: 'app-preinvoice-items-table',
   standalone: true,
-  imports: [CommonModule, PreinvoiceItemRowComponent],
+  imports: [CommonModule, ButtonModule, PreinvoiceItemRowComponent],
   templateUrl: './preinvoice-items-table.component.html',
   styleUrl: './preinvoice-items-table.component.css',
 })

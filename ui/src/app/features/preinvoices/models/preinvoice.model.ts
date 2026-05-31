@@ -55,6 +55,7 @@ export interface PreinvoiceItem extends PreinvoiceItemDraft {
 export interface InvoiceRow {
   equipmentQuery: string;
   equipmentOptions: import('../../equipment/models/equipment.model').EquipmentCatalogItem[];
+  selectedEquipment?: import('../../equipment/models/equipment.model').EquipmentCatalogItem | null;
   description: string;
   quantity: number;
   note: string;

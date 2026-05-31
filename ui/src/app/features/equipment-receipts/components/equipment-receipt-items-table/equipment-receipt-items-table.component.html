@@ -1,4 +1,17 @@
 <section class="receipt-items">
+  <div class="table-toolbar">
+    <p-button
+      type="button"
+      styleClass="add-row-button"
+      title="افزودن ردیف"
+      aria-label="افزودن ردیف"
+      icon="pi pi-plus"
+      severity="secondary"
+      [outlined]="true"
+      (onClick)="addRowRequested.emit()"
+    ></p-button>
+  </div>
+
   <div class="receipt-table">
     <div class="receipt-row receipt-head">
       <span>ردیف</span>
@@ -7,6 +20,7 @@
       <span>مدل و کلاس</span>
       <span>گستره درخواستی</span>
       <span>توضیحات</span>
+      <span class="actions-head"></span>
     </div>
 
     <ng-template ngFor let-row [ngForOf]="rows" let-i="index">
@@ -15,6 +29,7 @@
         [index]="i"
         (equipmentSearch)="equipmentSearch.emit($event)"
         (equipmentSelected)="equipmentSelected.emit({ row, option: $event })"
+        (removeRequested)="removeRowRequested.emit($event)"
       ></app-equipment-receipt-item-row>
     </ng-template>
   </div>

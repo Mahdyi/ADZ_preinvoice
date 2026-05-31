@@ -1,6 +1,10 @@
+<app-document-brand-banner></app-document-brand-banner>
+
 <section class="receipt-header-form">
   <div class="receipt-title-row">
-    <div class="brand-space"></div>
+    <div class="brand-mark">
+      <img src="/mohr.png" alt="ADZ" />
+    </div>
     <div class="title-block">
       <h1>رسید دریافت تجهیزات</h1>
       <p>
@@ -11,17 +15,17 @@
     <div class="meta-grid compact">
       <label>
         ش. پذیرش:
-        <input name="acceptanceNumber" [(ngModel)]="header.acceptanceNumber" />
+        <input pInputText name="acceptanceNumber" [(ngModel)]="header.acceptanceNumber" />
         <span class="print-value">{{ header.acceptanceNumber || '-' }}</span>
       </label>
       <label>
         تاریخ:
-        <input name="receiptDate" type="date" [(ngModel)]="header.date" />
+        <input pInputText name="receiptDate" type="date" [(ngModel)]="header.date" />
         <span class="print-value">{{ header.date || '-' }}</span>
       </label>
       <label>
         ساعت:
-        <input name="receiptTime" type="time" [(ngModel)]="header.time" />
+        <input pInputText name="receiptTime" type="time" [(ngModel)]="header.time" />
         <span class="print-value">{{ header.time || '-' }}</span>
       </label>
     </div>
@@ -30,42 +34,43 @@
   <div class="customer-grid">
     <label>
       شرکت:
-      <input name="company" [(ngModel)]="header.company" />
+      <input pInputText name="company" [(ngModel)]="header.company" />
       <span class="print-value">{{ header.company || '-' }}</span>
     </label>
     <label>
       مسئول پیگیری:
-      <input name="followUpPerson" [(ngModel)]="header.followUpPerson" />
+      <input pInputText name="followUpPerson" [(ngModel)]="header.followUpPerson" />
       <span class="print-value">{{ header.followUpPerson || '-' }}</span>
     </label>
     <label>
       شماره تماس:
-      <input name="phone" [(ngModel)]="header.phone" />
+      <input pInputText name="phone" [(ngModel)]="header.phone" />
       <span class="print-value">{{ header.phone || '-' }}</span>
     </label>
     <label>
       نام مسئول فنی:
-      <input name="technicalManager" [(ngModel)]="header.technicalManager" />
+      <input pInputText name="technicalManager" [(ngModel)]="header.technicalManager" />
       <span class="print-value">{{ header.technicalManager || '-' }}</span>
     </label>
     <label class="address-field">
       آدرس:
-      <input name="address" [(ngModel)]="header.address" />
+      <input pInputText name="address" [(ngModel)]="header.address" />
       <span class="print-value">{{ header.address || '-' }}</span>
     </label>
     <label>
       کدپستی:
-      <input name="postalCode" [(ngModel)]="header.postalCode" />
+      <input pInputText name="postalCode" [(ngModel)]="header.postalCode" />
       <span class="print-value">{{ header.postalCode || '-' }}</span>
     </label>
     <label>
       شناسه ملی:
-      <input name="nationalId" [(ngModel)]="header.nationalId" />
+      <input pInputText name="nationalId" [(ngModel)]="header.nationalId" />
       <span class="print-value">{{ header.nationalId || '-' }}</span>
     </label>
     <label>
       شماره تماس مسئول فنی:
       <input
+        pInputText
         name="technicalManagerPhone"
         [(ngModel)]="header.technicalManagerPhone"
       />

@@ -1,7 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component } from '@angular/core';
+import { ButtonModule } from 'primeng/button';
+import { MessageModule } from 'primeng/message';
 import {
   emptyEquipmentReceiptDraft,
+  emptyEquipmentReceiptRow,
   EquipmentReceiptDraft,
   EquipmentReceiptLookupOption,
   EquipmentReceiptRow,
@@ -20,6 +23,8 @@ import { EquipmentReceiptSignaturesComponent } from '../../components/equipment-
   standalone: true,
   imports: [
     CommonModule,
+    ButtonModule,
+    MessageModule,
     EquipmentReceiptHeaderFormComponent,
     EquipmentReceiptItemsTableComponent,
     EquipmentReceiptTermsComponent,
@@ -29,7 +34,8 @@ import { EquipmentReceiptSignaturesComponent } from '../../components/equipment-
   styleUrl: './equipment-receipt-page.component.css',
 })
 export class EquipmentReceiptPageComponent {
-  receipt: EquipmentReceiptDraft = emptyEquipmentReceiptDraft(5);
+  receipt: EquipmentReceiptDraft = emptyEquipmentReceiptDraft(1);
+  message = '';
   error = '';
 
   constructor(
@@ -38,6 +44,9 @@ export class EquipmentReceiptPageComponent {
   ) {}
 
   searchEquipment(row: EquipmentReceiptRow): void {
+    this.message = '';
+    this.error = '';
+
     const term = row.equipmentQuery.trim();
     if (!term) {
       row.equipmentOptions = [];
@@ -47,6 +56,17 @@ export class EquipmentReceiptPageComponent {
     this.lookup.search(term).subscribe({
       next: (options) => {
         row.equipmentOptions = options;
+        const currentQuery = row.equipmentQuery.trim();
+        const exactOption = options.find(
+          (option) =>
+            this.normalizedText(option.equipmentName) ===
+            this.normalizedText(currentQuery),
+        );
+
+        if (!row.selectedEquipment && exactOption) {
+          this.applyEquipment(row, exactOption);
+        }
+
         this.cdr.detectChanges();
       },
       error: () => {
@@ -58,7 +78,41 @@ export class EquipmentReceiptPageComponent {
   }
 
   selectEquipment(event: ReceiptEquipmentSelectedEvent): void {
+    this.message = '';
+    this.error = '';
     this.applyEquipment(event.row, event.option);
+  }
+
+  addRow(): void {
+    this.message = '';
+    this.error = '';
+    this.receipt.rows = [...this.receipt.rows, emptyEquipmentReceiptRow()];
+  }
+
+  removeRow(row: EquipmentReceiptRow): void {
+    this.message = '';
+    this.error = '';
+
+    if (this.receipt.rows.length === 1) {
+      this.receipt.rows = [emptyEquipmentReceiptRow()];
+      return;
+    }
+
+    this.receipt.rows = this.receipt.rows.filter(
+      (currentRow) => currentRow !== row,
+    );
+  }
+
+  printReceipt(): void {
+    this.message = '';
+    this.error = '';
+    window.print();
+  }
+
+  resetReceipt(): void {
+    this.receipt = emptyEquipmentReceiptDraft(1);
+    this.error = '';
+    this.message = 'رسید جدید آماده شد.';
   }
 
   private applyEquipment(
@@ -74,5 +128,9 @@ export class EquipmentReceiptPageComponent {
         : row.requestedRange;
     row.notes = option.location ? `محل: ${option.location}` : row.notes;
     row.equipmentOptions = [];
+  }
+
+  private normalizedText(value: string): string {
+    return value.trim().replaceAll('ك', 'ک').replaceAll('ي', 'ی');
   }
 }

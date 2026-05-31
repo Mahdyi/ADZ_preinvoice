@@ -1,64 +1,69 @@
-<div class="modal-backdrop" (click)="closeRequested.emit()">
-  <section class="customer-modal" (click)="$event.stopPropagation()">
-    <div class="modal-header">
-      <h2>ثبت مشتری جدید</h2>
-      <button
-        type="button"
-        class="icon-button neutral"
-        title="بستن"
-        aria-label="بستن"
-        (click)="closeRequested.emit()"
-      >
-        ×
-      </button>
-    </div>
+<p-dialog
+  header="ثبت مشتری جدید"
+  [modal]="true"
+  [visible]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [style]="{ width: 'min(760px, calc(100vw - 32px))' }"
+  styleClass="adz-prime-dialog"
+  (onHide)="closeRequested.emit()"
+>
+  <div class="create-grid" dir="rtl">
+    <label>
+      عنوان
+      <input pInputText name="newTitle" [(ngModel)]="customer.title" />
+    </label>
+    <label>
+      کد
+      <input pInputText name="newCode" [(ngModel)]="customer.code" />
+    </label>
+    <label>
+      شناسه ملی
+      <input pInputText name="newNational" [(ngModel)]="customer.national_id" />
+    </label>
+    <label>
+      کد اقتصادی
+      <input
+        pInputText
+        name="newEconomic"
+        [(ngModel)]="customer.economic_code"
+      />
+    </label>
+    <label>
+      کد پستی
+      <input pInputText name="newPostal" [(ngModel)]="customer.postal_code" />
+    </label>
+    <label>
+      تلفن
+      <input pInputText name="newPhone" [(ngModel)]="customer.phone" />
+    </label>
+    <label class="full">
+      آدرس
+      <textarea
+        pTextarea
+        name="newAddress"
+        rows="3"
+        [(ngModel)]="customer.address"
+      ></textarea>
+    </label>
+  </div>
 
-    <div class="create-grid">
-      <label>
-        عنوان
-        <input name="newTitle" [(ngModel)]="customer.title" />
-      </label>
-      <label>
-        کد
-        <input name="newCode" [(ngModel)]="customer.code" />
-      </label>
-      <label>
-        شناسه ملی
-        <input name="newNational" [(ngModel)]="customer.national_id" />
-      </label>
-      <label>
-        کد اقتصادی
-        <input name="newEconomic" [(ngModel)]="customer.economic_code" />
-      </label>
-      <label>
-        کد پستی
-        <input name="newPostal" [(ngModel)]="customer.postal_code" />
-      </label>
-      <label>
-        تلفن
-        <input name="newPhone" [(ngModel)]="customer.phone" />
-      </label>
-      <label class="full">
-        آدرس
-        <textarea
-          name="newAddress"
-          rows="3"
-          [(ngModel)]="customer.address"
-        ></textarea>
-      </label>
-    </div>
-
-    <div class="modal-actions">
-      <button type="button" class="soft-button" (click)="closeRequested.emit()">
-        انصراف
-      </button>
-      <button
+  <ng-template pTemplate="footer">
+    <div class="modal-actions" dir="rtl">
+      <p-button
         type="button"
-        class="primary-button"
-        (click)="saveRequested.emit()"
-      >
-        ذخیره و انتخاب مشتری
-      </button>
+        label="انصراف"
+        severity="secondary"
+        [outlined]="true"
+        icon="pi pi-times"
+        (onClick)="closeRequested.emit()"
+      ></p-button>
+      <p-button
+        type="button"
+        label="ذخیره و انتخاب مشتری"
+        icon="pi pi-save"
+        (onClick)="saveRequested.emit()"
+      ></p-button>
     </div>
-  </section>
-</div>
+  </ng-template>
+</p-dialog>

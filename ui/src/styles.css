@@ -1,3 +1,5 @@
+@import 'primeicons/primeicons.css';
+
 html {
   min-height: 100%;
   background: #eef4f1;
@@ -8,4 +10,39 @@ body {
   margin: 0;
   font-family: Tahoma, Arial, sans-serif;
   color: #152522;
+  direction: rtl;
+}
+
+.p-component {
+  font-family: Tahoma, Arial, sans-serif;
+}
+
+p-autocomplete,
+p-inputnumber {
+  display: block;
+  width: 100%;
+}
+
+.p-autocomplete,
+.p-inputnumber,
+.p-autocomplete-input,
+.p-inputnumber-input {
+  width: 100%;
+}
+
+.p-autocomplete-overlay,
+.p-dialog {
+  direction: rtl;
+}
+
+.p-autocomplete-option {
+  text-align: right;
+}
+
+@media print {
+  .p-autocomplete-overlay,
+  .p-dialog-mask,
+  .p-tooltip {
+    display: none !important;
+  }
 }

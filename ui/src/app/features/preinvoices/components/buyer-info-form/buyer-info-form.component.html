@@ -1,47 +1,55 @@
 <section class="buyer-section">
   <div class="section-heading">
     <h2>مشخصات خریدار</h2>
-    <button type="button" class="soft-button" (click)="createRequested.emit()">
-      مشتری جدید
-    </button>
+    <p-button
+      type="button"
+      label="مشتری جدید"
+      icon="pi pi-plus-circle"
+      severity="secondary"
+      [outlined]="true"
+      (onClick)="createRequested.emit()"
+    ></p-button>
   </div>
 
   <div class="buyer-grid">
     <label class="customer-picker">
       عنوان / شرکت
-      <input
+      <p-autocomplete
+        inputId="customerQuery"
         name="customerQuery"
-        autocomplete="off"
-        [ngModel]="customerQuery"
-        (ngModelChange)="customerQueryChange.emit($event)"
-        (focus)="searchRequested.emit()"
+        optionLabel="title"
+        [suggestions]="customerOptions"
+        [ngModel]="customerAutocompleteValue"
+        [forceSelection]="false"
+        [completeOnFocus]="true"
         placeholder="نام مشتری را جستجو کنید"
-      />
+        emptyMessage="موردی یافت نشد"
+        (ngModelChange)="updateCustomerQuery($event)"
+        (completeMethod)="completeCustomer($event)"
+        (onFocus)="searchRequested.emit()"
+        (onKeyUp)="handleCustomerKeyUp($event)"
+        (onBlur)="selectMatchingCustomerQuery()"
+        (onSelect)="selectCustomer($event)"
+      >
+        <ng-template let-customer pTemplate="item">
+          <div class="option-item">
+            <strong>{{ customer.title }}</strong>
+            <small>
+              {{ customer.code || 'بدون کد' }} ·
+              {{ customer.phone || 'بدون تلفن' }}
+            </small>
+          </div>
+        </ng-template>
+      </p-autocomplete>
       <span class="print-value">{{
         selectedCustomer?.title || customerQuery || '-'
       }}</span>
-
-      <div
-        class="dropdown"
-        *ngIf="customerOptions.length && customerQuery && !selectedCustomer"
-      >
-        <button
-          type="button"
-          *ngFor="let customer of customerOptions"
-          (click)="customerSelected.emit(customer)"
-        >
-          <strong>{{ customer.title }}</strong>
-          <small
-            >{{ customer.code || 'بدون کد' }} ·
-            {{ customer.phone || 'بدون تلفن' }}</small
-          >
-        </button>
-      </div>
     </label>
 
     <label>
       کد
       <input
+        pInputText
         name="customerCode"
         [ngModel]="selectedCustomer?.code || ''"
         readonly
@@ -52,6 +60,7 @@
     <label>
       شماره تماس
       <input
+        pInputText
         name="customerPhone"
         [ngModel]="selectedCustomer?.phone || ''"
         readonly
@@ -62,6 +71,7 @@
     <label>
       کد پستی
       <input
+        pInputText
         name="customerPostal"
         [ngModel]="selectedCustomer?.postal_code || ''"
         readonly
@@ -74,6 +84,7 @@
     <label>
       شناسه ملی
       <input
+        pInputText
         name="customerNational"
         [ngModel]="selectedCustomer?.national_id || ''"
         readonly
@@ -86,6 +97,7 @@
     <label>
       کد اقتصادی
       <input
+        pInputText
         name="customerEconomic"
         [ngModel]="selectedCustomer?.economic_code || ''"
         readonly
@@ -98,6 +110,7 @@
     <label class="full">
       آدرس
       <textarea
+        pTextarea
         name="customerAddress"
         rows="2"
         [ngModel]="selectedCustomer?.address || ''"

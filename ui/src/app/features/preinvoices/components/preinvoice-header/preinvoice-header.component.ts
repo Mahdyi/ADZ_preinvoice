@@ -1,11 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { InputTextModule } from 'primeng/inputtext';
+import { DocumentBrandBannerComponent } from '../../../../shared/components/document-brand-banner/document-brand-banner.component';
 
 @Component({
   selector: 'app-preinvoice-header',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    InputTextModule,
+    DocumentBrandBannerComponent,
+  ],
   templateUrl: './preinvoice-header.component.html',
   styleUrl: './preinvoice-header.component.css',
 })

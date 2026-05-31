@@ -1,7 +1,4 @@
-<section class="report-logos">
-  <img src="/adzir.png" alt="ابزار دقیق زنگان" />
-  <img src="/naci.png" alt="NACI" />
-</section>
+<app-document-brand-banner></app-document-brand-banner>
 
 <header class="invoice-header">
   <div class="brand-mark">
@@ -16,6 +13,7 @@
       شماره
       @if (editable) {
         <input
+          pInputText
           name="preinvoiceNumber"
           [ngModel]="preinvoiceNumber"
           (ngModelChange)="preinvoiceNumberChange.emit($event)"
@@ -27,6 +25,7 @@
       تاریخ صدور
       @if (editable) {
         <input
+          pInputText
           name="issueDate"
           type="date"
           [ngModel]="issueDate"

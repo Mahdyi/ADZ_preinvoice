@@ -1,0 +1,37 @@
+:host {
+  display: block;
+}
+
+.document-brand-banner {
+  padding: 14px 22px 6px;
+  border-bottom: 1px solid #dfe9e5;
+}
+
+.document-brand-banner img {
+  display: block;
+  width: 100%;
+  max-height: 118px;
+  object-fit: contain;
+  object-position: center;
+}
+
+@media (max-width: 640px) {
+  .document-brand-banner {
+    padding: 10px 12px 4px;
+  }
+
+  .document-brand-banner img {
+    max-height: 82px;
+  }
+}
+
+@media print {
+  .document-brand-banner {
+    padding: 0 0 5px;
+    border-bottom: 1px solid #9dadab;
+  }
+
+  .document-brand-banner img {
+    max-height: 54px;
+  }
+}

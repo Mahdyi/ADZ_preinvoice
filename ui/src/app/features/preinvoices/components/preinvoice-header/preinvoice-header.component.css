@@ -2,26 +2,6 @@
   display: block;
 }
 
-.report-logos {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 18px;
-  padding: 14px 22px 4px;
-}
-
-.report-logos img:first-child {
-  width: min(560px, 64%);
-  max-height: 96px;
-  object-fit: contain;
-}
-
-.report-logos img:last-child {
-  width: min(360px, 34%);
-  max-height: 110px;
-  object-fit: contain;
-}
-
 .invoice-header,
 .seller-strip {
   padding: 18px 22px;
@@ -132,19 +112,6 @@ input {
     padding: 12px;
   }
 
-  .report-logos {
-    gap: 10px;
-    padding: 10px 12px 2px;
-  }
-
-  .report-logos img:first-child {
-    width: 58%;
-  }
-
-  .report-logos img:last-child {
-    width: 38%;
-  }
-
   .brand-mark {
     width: 46px;
   }
@@ -174,21 +141,6 @@ input {
 }
 
 @media print {
-  .report-logos {
-    padding: 0 0 5px;
-    border-bottom: 1px solid #9dadab;
-  }
-
-  .report-logos img:first-child {
-    width: 60%;
-    max-height: 54px;
-  }
-
-  .report-logos img:last-child {
-    width: 34%;
-    max-height: 58px;
-  }
-
   .invoice-header,
   .seller-strip {
     padding: 8px 0;

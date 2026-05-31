@@ -66,7 +66,7 @@ export function emptyEquipmentReceiptRow(): EquipmentReceiptRow {
   };
 }
 
-export function emptyEquipmentReceiptDraft(rowCount = 5): EquipmentReceiptDraft {
+export function emptyEquipmentReceiptDraft(rowCount = 1): EquipmentReceiptDraft {
   return {
     header: emptyEquipmentReceiptHeader(),
     rows: Array.from({ length: rowCount }, () => emptyEquipmentReceiptRow()),

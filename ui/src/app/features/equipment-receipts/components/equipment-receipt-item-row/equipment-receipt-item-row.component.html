@@ -1,45 +1,59 @@
 <span class="row-index">{{ index + 1 }}</span>
 
 <label class="equipment-picker">
-  <input
+  <p-autocomplete
+    inputId="receiptEquipment{{ index }}"
     name="receiptEquipment{{ index }}"
-    autocomplete="off"
-    [ngModel]="row.equipmentQuery"
-    (ngModelChange)="updateEquipmentQuery($event)"
-    (focus)="equipmentSearch.emit(row)"
+    optionLabel="equipmentName"
+    [suggestions]="row.equipmentOptions"
+    [ngModel]="equipmentAutocompleteValue"
+    [forceSelection]="false"
+    [completeOnFocus]="true"
     placeholder="نام تجهیز"
-  />
-  <span class="print-value">{{ row.equipmentName || '-' }}</span>
-
-  <div
-    class="dropdown"
-    *ngIf="row.equipmentOptions.length && row.equipmentQuery"
+    emptyMessage="موردی یافت نشد"
+    (ngModelChange)="handleEquipmentModelChange($event)"
+    (completeMethod)="completeEquipment($event)"
+    (onFocus)="equipmentSearch.emit(row)"
+    (onKeyUp)="handleEquipmentKeyUp($event)"
+    (onBlur)="selectMatchingEquipmentQuery()"
+    (onSelect)="selectEquipment($event)"
   >
-    <button
-      type="button"
-      *ngFor="let option of row.equipmentOptions"
-      (click)="equipmentSelected.emit(option)"
-    >
-      <strong>{{ option.equipmentName }}</strong>
-      <small>
-        {{ option.sheetName || '-' }} ·
-        {{ option.measurementQuantity || '-' }} · {{ option.location || '-' }}
-      </small>
-    </button>
-  </div>
+    <ng-template let-option pTemplate="item">
+      <div class="option-item">
+        <strong>{{ option.equipmentName }}</strong>
+        <small>
+          {{ option.sheetName || '-' }} ·
+          {{ option.measurementQuantity || '-' }} · {{ option.location || '-' }}
+        </small>
+      </div>
+    </ng-template>
+  </p-autocomplete>
+  <span class="print-value">{{ row.equipmentName || '-' }}</span>
 </label>
 
-<input name="manufacturer{{ index }}" [(ngModel)]="row.manufacturer" />
+<input pInputText name="manufacturer{{ index }}" [(ngModel)]="row.manufacturer" />
 <span class="print-value">{{ row.manufacturer || '-' }}</span>
 
-<input name="modelClass{{ index }}" [(ngModel)]="row.modelClass" />
+<input pInputText name="modelClass{{ index }}" [(ngModel)]="row.modelClass" />
 <span class="print-value">{{ row.modelClass || '-' }}</span>
 
 <input
+  pInputText
   name="requestedRange{{ index }}"
   [(ngModel)]="row.requestedRange"
 />
 <span class="print-value">{{ row.requestedRange || '-' }}</span>
 
-<input name="notes{{ index }}" [(ngModel)]="row.notes" />
+<input pInputText name="notes{{ index }}" [(ngModel)]="row.notes" />
 <span class="print-value notes-print">{{ row.notes || '-' }}</span>
+
+<p-button
+  type="button"
+  styleClass="row-remove"
+  title="حذف ردیف"
+  aria-label="حذف ردیف"
+  icon="pi pi-times"
+  severity="danger"
+  [outlined]="true"
+  (onClick)="removeRequested.emit(row)"
+></p-button>

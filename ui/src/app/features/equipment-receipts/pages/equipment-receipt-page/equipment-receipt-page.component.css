@@ -19,8 +19,18 @@
   box-shadow: 0 18px 48px rgba(26, 52, 46, 0.12);
 }
 
+.receipt-actions {
+  width: min(1220px, 100%);
+  margin: 0 auto 12px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
 .status {
   padding: 0 22px 12px;
+  display: grid;
+  gap: 8px;
 }
 
 .status p {
@@ -37,6 +47,11 @@
 @media (max-width: 640px) {
   .receipt-shell {
     padding: 10px;
+  }
+
+  .receipt-actions {
+    margin-bottom: 10px;
+    flex-direction: column;
   }
 
   .receipt-paper {
@@ -64,7 +79,14 @@
     box-shadow: none;
   }
 
+  .receipt-actions,
   .status {
     display: none;
+  }
+
+  .p-autocomplete-overlay,
+  .p-dialog-mask,
+  .p-tooltip {
+    display: none !important;
   }
 }

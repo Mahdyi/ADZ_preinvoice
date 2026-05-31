@@ -1,4 +1,21 @@
 <main class="receipt-shell">
+  <section class="receipt-actions" aria-label="اقدامات رسید">
+    <p-button
+      type="button"
+      label="چاپ رسید"
+      icon="pi pi-print"
+      (onClick)="printReceipt()"
+    ></p-button>
+    <p-button
+      type="button"
+      label="رسید جدید"
+      icon="pi pi-refresh"
+      severity="secondary"
+      [outlined]="true"
+      (onClick)="resetReceipt()"
+    ></p-button>
+  </section>
+
   <section class="receipt-paper">
     <app-equipment-receipt-header-form
       [header]="receipt.header"
@@ -8,10 +25,17 @@
       [rows]="receipt.rows"
       (equipmentSearch)="searchEquipment($event)"
       (equipmentSelected)="selectEquipment($event)"
+      (addRowRequested)="addRow()"
+      (removeRowRequested)="removeRow($event)"
     ></app-equipment-receipt-items-table>
 
-    <section class="status" *ngIf="error">
-      <p class="error">{{ error }}</p>
+    <section class="status" *ngIf="message || error">
+      <p-message
+        *ngIf="message"
+        severity="success"
+        [text]="message"
+      ></p-message>
+      <p-message *ngIf="error" severity="error" [text]="error"></p-message>
     </section>
 
     <app-equipment-receipt-terms></app-equipment-receipt-terms>

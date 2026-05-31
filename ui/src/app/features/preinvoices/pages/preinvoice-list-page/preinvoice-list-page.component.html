@@ -4,13 +4,15 @@
 >
   <section class="list-page">
     <header class="list-header">
-      <button
+      <p-button
         type="button"
-        class="soft-button list-print-button"
-        (click)="printListReport()"
-      >
-        چاپ گزارش
-      </button>
+        styleClass="list-print-button"
+        label="چاپ گزارش"
+        icon="pi pi-print"
+        severity="secondary"
+        [outlined]="true"
+        (onClick)="printListReport()"
+      ></p-button>
       <div>
         <p>گزارش پیش فاکتورها</p>
         <h1>لیست پیش فاکتورها</h1>
@@ -19,8 +21,13 @@
     </header>
 
     <div class="list-table-wrap">
-      <table class="preinvoice-list-table">
-        <thead>
+      <p-table
+        styleClass="preinvoice-list-table"
+        [value]="preinvoiceSummaries"
+        [loading]="loadingPreinvoiceSummaries"
+        [tableStyle]="{ 'min-width': '900px' }"
+      >
+        <ng-template pTemplate="header">
           <tr>
             <th>شماره</th>
             <th>مشتری</th>
@@ -32,9 +39,9 @@
             <th>مبلغ کل</th>
             <th class="action-column">عملیات</th>
           </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let invoice of preinvoiceSummaries">
+        </ng-template>
+        <ng-template let-invoice pTemplate="body">
+          <tr>
             <td>{{ invoice.preinvoice_number }}</td>
             <td>{{ invoice.customer_title }}</td>
             <td>{{ invoice.customer_code || '-' }}</td>
@@ -45,39 +52,39 @@
             <td>{{ formatMoney(+invoice.total) }} ریال</td>
             <td class="action-column">
               <div class="row-actions">
-                <button
+                <p-button
                   type="button"
-                  class="soft-button row-edit-button"
-                  (click)="editPreinvoice(invoice)"
-                >
-                  ویرایش
-                </button>
-                <button
+                  label="ویرایش"
+                  icon="pi pi-pencil"
+                  severity="secondary"
+                  [outlined]="true"
+                  (onClick)="editPreinvoice(invoice)"
+                ></p-button>
+                <p-button
                   type="button"
-                  class="soft-button row-print-button"
-                  [disabled]="printingPreinvoiceId === invoice.id"
-                  (click)="printPreinvoiceReport(invoice)"
-                >
-                  {{
+                  [label]="
                     printingPreinvoiceId === invoice.id
                       ? 'در حال آماده سازی...'
                       : 'چاپ گزارش'
-                  }}
-                </button>
+                  "
+                  icon="pi pi-print"
+                  severity="secondary"
+                  [outlined]="true"
+                  [disabled]="printingPreinvoiceId === invoice.id"
+                  (onClick)="printPreinvoiceReport(invoice)"
+                ></p-button>
               </div>
             </td>
           </tr>
-          <tr
-            *ngIf="!preinvoiceSummaries.length && !loadingPreinvoiceSummaries"
-          >
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
             <td colspan="9" class="empty-list">پیش فاکتوری ثبت نشده است.</td>
           </tr>
-          <tr *ngIf="loadingPreinvoiceSummaries">
-            <td colspan="9" class="empty-list">در حال دریافت...</td>
-          </tr>
-        </tbody>
-      </table>
+        </ng-template>
+      </p-table>
     </div>
+    <p-message *ngIf="error" severity="error" [text]="error"></p-message>
   </section>
 
   <section
