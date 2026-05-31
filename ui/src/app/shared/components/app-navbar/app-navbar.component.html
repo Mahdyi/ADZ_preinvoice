@@ -1,0 +1,29 @@
+<p-toolbar styleClass="app-navbar">
+  <ng-template pTemplate="start">
+    <a class="app-brand" routerLink="/">
+      <span class="brand-title">ابزار دقیق زنگان</span>
+      <span class="brand-subtitle">اسناد کالیبراسیون</span>
+    </a>
+  </ng-template>
+
+  <ng-template pTemplate="end">
+    <nav class="nav-links" aria-label="ناوبری اصلی">
+      <a
+        routerLink="/"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <i class="pi pi-file-edit" aria-hidden="true"></i>
+        <span>پیش فاکتور</span>
+      </a>
+      <a routerLink="/preinvoices-list" routerLinkActive="active">
+        <i class="pi pi-list" aria-hidden="true"></i>
+        <span>لیست پیش فاکتورها</span>
+      </a>
+      <a routerLink="/equipment-receipt" routerLinkActive="active">
+        <i class="pi pi-receipt" aria-hidden="true"></i>
+        <span>رسید دریافت تجهیزات</span>
+      </a>
+    </nav>
+  </ng-template>
+</p-toolbar>

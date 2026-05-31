@@ -1,0 +1,101 @@
+:host {
+  display: block;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  border-bottom: 1px solid #d8e4df;
+  background: rgba(246, 250, 248, 0.96);
+  backdrop-filter: blur(10px);
+}
+
+:host ::ng-deep .app-navbar {
+  width: min(1220px, calc(100% - 32px));
+  margin: 0 auto;
+  border: 0;
+  border-radius: 0;
+  padding: 10px 0;
+  background: transparent;
+}
+
+.app-brand {
+  display: grid;
+  gap: 2px;
+  color: #10211d;
+  text-decoration: none;
+}
+
+.brand-title {
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.brand-subtitle {
+  color: #58706b;
+  font-size: 0.78rem;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.nav-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 38px;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  padding: 8px 12px;
+  color: #29423d;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 700;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  border-color: #9bc8be;
+  background: #e6f4ef;
+  color: #0f5f56;
+}
+
+.nav-links i {
+  font-size: 0.95rem;
+}
+
+@media (max-width: 760px) {
+  :host ::ng-deep .app-navbar {
+    width: min(100% - 20px, 1220px);
+  }
+
+  :host ::ng-deep .app-navbar .p-toolbar {
+    gap: 10px;
+  }
+
+  .app-brand {
+    width: 100%;
+  }
+
+  .nav-links {
+    width: 100%;
+  }
+
+  .nav-links a {
+    flex: 1 1 150px;
+    padding-inline: 9px;
+  }
+}
+
+@media print {
+  :host {
+    display: none;
+  }
+}
