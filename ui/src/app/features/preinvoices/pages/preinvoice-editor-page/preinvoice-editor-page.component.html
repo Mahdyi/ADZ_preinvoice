@@ -42,7 +42,6 @@
     <app-preinvoice-items-table
       [rows]="rows"
       [rowTotal]="rowTotalForTable"
-      (newEquipmentRequested)="prepareNewEquipmentForNewRow()"
       (equipmentSearch)="searchEquipment($event)"
       (equipmentSelected)="selectEquipment($event.row, $event.item)"
       (createEquipment)="prepareNewEquipment($event)"
