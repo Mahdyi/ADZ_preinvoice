@@ -36,6 +36,45 @@ export interface EquipmentReceiptDraft {
   rows: EquipmentReceiptRow[];
 }
 
+export interface EquipmentReceiptRecordDraft {
+  acceptance_number: string | null;
+  receipt_date: string;
+  receipt_time: string;
+  company: string | null;
+  follow_up_person: string | null;
+  phone: string | null;
+  technical_manager: string | null;
+  address: string | null;
+  postal_code: string | null;
+  national_id: string | null;
+  technical_manager_phone: string | null;
+  status: string;
+}
+
+export interface EquipmentReceiptRecord extends EquipmentReceiptRecordDraft {
+  id: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export type EquipmentReceiptSummary = EquipmentReceiptRecord;
+
+export interface EquipmentReceiptItemDraft {
+  equipment_receipt_id?: number;
+  sort_order: number;
+  equipment_catalog_id: number | null;
+  equipment_name: string;
+  manufacturer: string | null;
+  model_class: string | null;
+  requested_range: string | null;
+  notes: string | null;
+}
+
+export interface EquipmentReceiptItem extends EquipmentReceiptItemDraft {
+  id: number;
+  equipment_receipt_id: number;
+}
+
 export function emptyEquipmentReceiptHeader(): EquipmentReceiptHeader {
   const now = new Date();
   return {

@@ -1,0 +1,87 @@
+<main class="receipts-list-shell">
+  <section class="receipts-list-page">
+    <header class="list-header">
+      <div>
+        <p>گزارش رسیدهای تجهیزات</p>
+        <h1>لیست رسیدها</h1>
+      </div>
+      <a class="primary-link" href="/equipment-receipt">رسید جدید</a>
+    </header>
+
+    <div class="list-table-wrap">
+      <p-table
+        styleClass="receipts-list-table"
+        [value]="receipts"
+        [loading]="loading"
+        [tableStyle]="{ 'min-width': '860px' }"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th>شماره رسید</th>
+            <th>ش. پذیرش</th>
+            <th>شرکت</th>
+            <th>تاریخ</th>
+            <th>مسئول پیگیری</th>
+            <th>شماره تماس</th>
+            <th>تاریخ ثبت</th>
+            <th class="action-column">عملیات</th>
+          </tr>
+        </ng-template>
+        <ng-template let-receipt pTemplate="body">
+          <tr>
+            <td>{{ receipt.id }}</td>
+            <td>{{ receipt.acceptance_number || '-' }}</td>
+            <td>{{ receipt.company || '-' }}</td>
+            <td>{{ receipt.receipt_date }}</td>
+            <td>{{ receipt.follow_up_person || '-' }}</td>
+            <td>{{ receipt.phone || '-' }}</td>
+            <td>{{ receipt.created_at | date: 'yyyy-MM-dd HH:mm' }}</td>
+            <td class="action-column">
+              <div class="row-actions">
+                <p-button
+                  type="button"
+                  label="ویرایش"
+                  icon="pi pi-pencil"
+                  severity="secondary"
+                  [outlined]="true"
+                  (onClick)="editReceipt(receipt)"
+                ></p-button>
+                <p-button
+                  type="button"
+                  [label]="
+                    printingReceiptId === receipt.id
+                      ? 'در حال آماده سازی...'
+                      : 'چاپ'
+                  "
+                  icon="pi pi-print"
+                  severity="secondary"
+                  [outlined]="true"
+                  [disabled]="printingReceiptId === receipt.id"
+                  (onClick)="printReceipt(receipt)"
+                ></p-button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="8" class="empty-list">رسیدی ثبت نشده است.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+
+    <p-message *ngIf="error" severity="error" [text]="error"></p-message>
+  </section>
+
+  <section class="receipt-paper list-print-receipt" *ngIf="selectedReceipt">
+    <app-equipment-receipt-header-form
+      [header]="selectedReceipt.header"
+    ></app-equipment-receipt-header-form>
+    <app-equipment-receipt-items-table
+      [rows]="selectedReceipt.rows"
+    ></app-equipment-receipt-items-table>
+    <app-equipment-receipt-terms></app-equipment-receipt-terms>
+    <app-equipment-receipt-signatures></app-equipment-receipt-signatures>
+  </section>
+</main>

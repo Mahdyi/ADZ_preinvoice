@@ -2,6 +2,19 @@
   <section class="receipt-actions" aria-label="اقدامات رسید">
     <p-button
       type="button"
+      [label]="
+        saving
+          ? 'در حال ذخیره...'
+          : isEditMode
+            ? 'به‌روزرسانی رسید'
+            : 'ذخیره رسید'
+      "
+      icon="pi pi-save"
+      [disabled]="saving || loadingReceipt"
+      (onClick)="saveReceipt()"
+    ></p-button>
+    <p-button
+      type="button"
       label="چاپ رسید"
       icon="pi pi-print"
       (onClick)="printReceipt()"

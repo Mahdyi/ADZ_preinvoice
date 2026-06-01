@@ -16,13 +16,29 @@
         <i class="pi pi-file-edit" aria-hidden="true"></i>
         <span>پیش فاکتور</span>
       </a>
-      <a routerLink="/preinvoices-list" routerLinkActive="active">
+      <a
+        routerLink="/preinvoices-list"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
         <i class="pi pi-list" aria-hidden="true"></i>
         <span>لیست پیش فاکتورها</span>
       </a>
-      <a routerLink="/equipment-receipt" routerLinkActive="active">
+      <a
+        routerLink="/equipment-receipt"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
         <i class="pi pi-receipt" aria-hidden="true"></i>
         <span>رسید دریافت تجهیزات</span>
+      </a>
+      <a
+        routerLink="/equipment-receipts-list"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <i class="pi pi-table" aria-hidden="true"></i>
+        <span>لیست رسیدها</span>
       </a>
     </nav>
   </ng-template>

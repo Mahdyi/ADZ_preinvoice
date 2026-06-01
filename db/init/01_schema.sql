@@ -92,6 +92,39 @@ CREATE TABLE IF NOT EXISTS api.equipment_catalog (
 CREATE INDEX IF NOT EXISTS equipment_catalog_name_idx
 ON api.equipment_catalog (equipment_name);
 
+CREATE TABLE IF NOT EXISTS api.equipment_receipts (
+  id serial primary key,
+  acceptance_number text,
+  receipt_date date not null default current_date,
+  receipt_time time not null default current_time,
+  company text,
+  follow_up_person text,
+  phone text,
+  technical_manager text,
+  address text,
+  postal_code text,
+  national_id text,
+  technical_manager_phone text,
+  status text not null default 'draft',
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+CREATE TABLE IF NOT EXISTS api.equipment_receipt_items (
+  id serial primary key,
+  equipment_receipt_id int not null references api.equipment_receipts(id) on delete cascade,
+  sort_order int not null default 1,
+  equipment_catalog_id int references api.equipment_catalog(id) on delete set null,
+  equipment_name text not null,
+  manufacturer text,
+  model_class text,
+  requested_range text,
+  notes text
+);
+
+CREATE INDEX IF NOT EXISTS equipment_receipt_items_receipt_idx
+ON api.equipment_receipt_items (equipment_receipt_id);
+
 --------------------------------------------------------------------------------
 -- VIEW
 --------------------------------------------------------------------------------
@@ -150,6 +183,8 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON api.preinvoices TO web_anon;
 GRANT SELECT, INSERT, UPDATE, DELETE ON api.preinvoice_items TO web_anon;
 GRANT SELECT, INSERT, UPDATE, DELETE
 ON api.equipment_catalog TO web_anon;
+GRANT SELECT, INSERT, UPDATE, DELETE ON api.equipment_receipts TO web_anon;
+GRANT SELECT, INSERT, UPDATE, DELETE ON api.equipment_receipt_items TO web_anon;
 GRANT SELECT ON api.preinvoice_with_totals TO web_anon;
 
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA api TO web_anon;
