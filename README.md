@@ -1,90 +1,66 @@
-<<<<<<< HEAD
-# Preinvoice App
+# ADZ Preinvoice
 
-Angular + Postgres + PostgREST project for creating calibration preinvoices with customer lookup and an equipment price catalog.
+Angular 21 + PrimeNG 21 + PostgREST project for calibration preinvoices and equipment receipt workflows.
 
-## Requirements
+## Project Shape
 
-- Docker Desktop
-- Node.js LTS 22 recommended for production/development
-- npm
+- Angular app: `ui/`
+- Feature code: `ui/src/app/features`
+- Shared reusable UI: `ui/src/app/shared`
+- App shell/layout: `ui/src/app/core/layout`
+- Database schema/init scripts: `db/init`
+- Docker entry point: `docker-compose.yml`
 
-Your current Node.js is usable for building here, but it is an odd-numbered version. For normal work, install Node.js 22 LTS.
+Do not create `ui/src/app/layout` or `ui/src/app/shared/layout`; layout code belongs under `ui/src/app/core/layout`.
 
-## Excel Columns
+## Current Routes
 
-The customer importer reads the first worksheet and maps these headers:
+Clean routes:
 
-| Excel header | Database column |
-| --- | --- |
-| شناسه/كد ملي | `national_id` |
-| كد اقتصادي | `economic_code` |
-| كد پستي | `postal_code` |
-| آدرس | `address` |
-| تلفن | `phone` |
-| كد | `code` |
-| عنوان | `title` |
+- `/preinvoices/new`
+- `/preinvoices`
+- `/equipment-receipts/new`
+- `/equipment-receipts`
 
-Rows without `عنوان` are skipped. Rows with `كد` are imported with upsert behavior: if that code already exists, the customer is updated; otherwise a new customer is created. Rows without `كد` are inserted as new customers.
+Compatibility redirects:
 
-The Angular preinvoice screen uses customers that already exist in Postgres. For older legacy `.xls` customer files, use the local import script below.
+- `/` -> `/preinvoices/new`
+- `/preinvoices-list` -> `/preinvoices`
+- `/equipment-receipt` -> `/equipment-receipts/new`
+- `/equipment-receipts-list` -> `/equipment-receipts`
 
-## Import The Legacy XLS File
-
-Install the import script dependencies once:
-
-```powershell
-python -m pip install --user -r scripts/requirements-import.txt
-```
-
-Preview the import:
-
-```powershell
-python scripts/import_customers.py "D:\Projects\Abzar_Daqiq\Abzar_Daqiq_Excel\main\costumermain.xls" --dry-run
-```
-
-Import into the running PostgREST database:
-
-```powershell
-python scripts/import_customers.py "D:\Projects\Abzar_Daqiq\Abzar_Daqiq_Excel\main\costumermain.xls"
-```
-
-## Import The Equipment Catalog
-
-The preinvoice item dropdown reads from `api.equipment_catalog`. Import the calibration price list with:
-
-```powershell
-node scripts/import_equipment_catalog.js "D:\Projects\Abzar_Daqiq\Abzar_Daqiq_Excel\main\1405-01-26پیش فاکتور کالیبراسیون.xlsx"
-```
-
-Preview only:
-
-```powershell
-node scripts/import_equipment_catalog.js "D:\Projects\Abzar_Daqiq\Abzar_Daqiq_Excel\main\1405-01-26پیش فاکتور کالیبراسیون.xlsx" --dry-run
-```
-
-The workbook has 445 rows including the header, so the importer loads 444 equipment records.
-
-## Run Everything With Docker
+## Run With Docker
 
 From the project root:
 
 ```powershell
-docker compose up -d --build
+docker compose up -d
 ```
 
 Open:
 
-- Angular preinvoice UI: `http://localhost:8080`
-- PostgREST API: `http://localhost:3000/customers`
+- UI: `http://localhost:18080`
+- PostgREST: `http://localhost:3000`
+- Swagger UI: `http://localhost:18082`
 - Postgres host port: `localhost:55432`
 
-If you change `db/init/01_schema.sql` after the first database start, recreate the database volume:
+To rebuild the Docker-served UI:
 
 ```powershell
-docker compose down -v
-docker compose up -d --build
+docker compose up --build --pull never -d ui
 ```
+
+If Docker cannot reach Docker Hub but the UI container is already running, build locally and copy the output into the container:
+
+```powershell
+cd ui
+$env:CI='true'
+npm run build
+cd ..
+docker compose cp ui\dist\preinvoice-ui\browser\. ui:/usr/share/nginx/html
+```
+
+Then hard refresh the browser with `Ctrl + F5`.
 
 ## Angular Development
 
@@ -95,7 +71,7 @@ cd ui
 npm install
 ```
 
-Start only Postgres + PostgREST:
+Start only the backend services:
 
 ```powershell
 cd ..
@@ -109,55 +85,49 @@ cd ui
 npm start
 ```
 
-Open `http://localhost:4200`. The Angular dev proxy sends `/api/*` requests to `http://localhost:3000`.
+Open `http://localhost:4200`. The Angular proxy sends `/api/*` requests to PostgREST.
 
-## Useful API Calls
+## Build Notes
 
-Create a customer:
-
-```powershell
-Invoke-RestMethod -Method Post `
-  -Uri "http://localhost:3000/customers" `
-  -Headers @{ Prefer = "return=representation" } `
-  -ContentType "application/json" `
-  -Body '[{"title":"شرکت نمونه","code":"1001","phone":"02112345678"}]'
-```
-
-List customers:
+Normal build:
 
 ```powershell
-Invoke-RestMethod "http://localhost:3000/customers?order=id.desc"
+cd ui
+npm run build
 ```
 
-List equipment catalog rows:
+If Angular cache permissions or local Node issues cause a silent build failure, run with persistent cache disabled for that command:
 
 ```powershell
-Invoke-RestMethod "http://localhost:3000/equipment_catalog?select=equipment_name,price&limit=5"
+cd ui
+$env:CI='true'
+npm run build
 ```
 
-Upsert by customer code:
+Node 22 or 24 is recommended. Avoid odd-numbered Node versions for Angular work.
+
+## Useful Checks
+
+Mojibake guard:
 
 ```powershell
-Invoke-RestMethod -Method Post `
-  -Uri "http://localhost:3000/customers?on_conflict=code" `
-  -Headers @{ Prefer = "resolution=merge-duplicates,return=representation" } `
-  -ContentType "application/json" `
-  -Body '[{"title":"شرکت نمونه ویرایش شده","code":"1001","phone":"02100000000"}]'
+rg "[\x{00d8}\x{00d9}\x{00da}\x{00db}\x{00c3}\x{00c2}\x{00e2}]" ui\src\app\features ui\src\app\shared ui\src\app\core
 ```
 
-## Project Layout
+TypeScript check:
 
-```text
-.
-├── db/init/01_schema.sql
-├── docker-compose.yml
-└── ui
-    ├── src/app
-    ├── Dockerfile
-    ├── nginx.conf
-    └── proxy.conf.json
+```powershell
+cd ui
+npx tsc -p tsconfig.app.json --noEmit
 ```
-=======
-# ADZ_preinvoice
-Abzar Daqiq Zangan
->>>>>>> 0b3b763d843f0489804077f32760409462597164
+
+## Working Rules
+
+- Keep Persian text UTF-8.
+- Protect invoice and receipt print layouts.
+- Keep components standalone.
+- Keep page/container state and API calls in page components.
+- Child components should receive inputs and emit events.
+- Use PrimeNG incrementally.
+- Avoid broad preinvoice refactors unless explicitly requested.
+- Do not touch `ui/angular.json` when it has local modifications unless explicitly requested.
