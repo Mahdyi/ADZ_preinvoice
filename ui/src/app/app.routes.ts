@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { MainLayoutComponent } from './core/layout/main-layout/main-layout.component';
+import { CustomerImportPageComponent } from './features/customers/pages/customer-import-page/customer-import-page.component';
 import { DashboardPageComponent } from './features/dashboard/pages/dashboard-page/dashboard-page.component';
 import { EquipmentReceiptsListPageComponent } from './features/equipment-receipts/pages/equipment-receipts-list-page/equipment-receipts-list-page.component';
 import { EquipmentReceiptPageComponent } from './features/equipment-receipts/pages/equipment-receipt-page/equipment-receipt-page.component';
@@ -13,6 +14,7 @@ export const routes: Routes = [
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardPageComponent },
+      { path: 'customers/import', component: CustomerImportPageComponent },
       { path: 'preinvoices/new', component: PreinvoiceEditorPageComponent },
       { path: 'preinvoices', component: PreinvoiceListPageComponent },
       {

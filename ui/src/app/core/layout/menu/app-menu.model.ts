@@ -21,6 +21,16 @@ export const APP_MENU: AppMenuGroup[] = [
     ],
   },
   {
+    label: 'مشتریان',
+    items: [
+      {
+        label: 'ورود مشتریان از اکسل',
+        route: '/customers/import',
+        icon: 'pi pi-file-import',
+      },
+    ],
+  },
+  {
     label: 'پیش فاکتورها',
     items: [
       {

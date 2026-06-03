@@ -15,6 +15,8 @@
 
 Clean routes:
 
+- `/dashboard`
+- `/customers/import`
 - `/preinvoices/new`
 - `/preinvoices`
 - `/equipment-receipts/new`
@@ -22,7 +24,7 @@ Clean routes:
 
 Compatibility redirects:
 
-- `/` -> `/preinvoices/new`
+- `/` -> `/dashboard`
 - `/preinvoices-list` -> `/preinvoices`
 - `/equipment-receipt` -> `/equipment-receipts/new`
 - `/equipment-receipts-list` -> `/equipment-receipts`
