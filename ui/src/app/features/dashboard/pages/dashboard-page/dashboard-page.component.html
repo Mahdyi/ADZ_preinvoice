@@ -1,0 +1,27 @@
+<main class="dashboard-page">
+  <header class="dashboard-header">
+    <p>نمای سریع مسیرهای اصلی سامانه</p>
+    <h1>داشبورد</h1>
+  </header>
+
+  <section class="quick-actions" aria-label="دسترسی سریع">
+    <p-card *ngFor="let action of actions" styleClass="action-card">
+      <ng-template pTemplate="header">
+        <div class="action-icon">
+          <i [class]="action.icon" aria-hidden="true"></i>
+        </div>
+      </ng-template>
+
+      <h2>{{ action.title }}</h2>
+      <p>{{ action.description }}</p>
+
+      <a
+        pButton
+        [routerLink]="action.route"
+        icon="pi pi-arrow-left"
+        label="ورود"
+        class="action-link"
+      ></a>
+    </p-card>
+  </section>
+</main>

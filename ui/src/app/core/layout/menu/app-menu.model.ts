@@ -11,6 +11,16 @@ export interface AppMenuGroup {
 
 export const APP_MENU: AppMenuGroup[] = [
   {
+    label: 'اصلی',
+    items: [
+      {
+        label: 'داشبورد',
+        route: '/dashboard',
+        icon: 'pi pi-home',
+      },
+    ],
+  },
+  {
     label: 'پیش فاکتورها',
     items: [
       {
