@@ -4,14 +4,22 @@
 }
 
 .customer-import-page {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
   min-height: calc(100vh - 62px);
   padding: 28px;
   background: #eef4f1;
   color: #172622;
+  overflow-x: hidden;
 }
 
 :host ::ng-deep .import-card {
   width: min(1180px, 100%);
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
   margin: 0 auto;
   border: 1px solid #d8e4df;
   border-radius: 8px;
@@ -218,7 +226,20 @@
 
 @media (max-width: 640px) {
   .customer-import-page {
-    padding: 12px;
+    padding: 8px;
+  }
+
+  .page-header {
+    padding: 16px 16px 0;
+  }
+
+  .page-header h1 {
+    font-size: 1.45rem;
+  }
+
+  .summary-grid > div {
+    width: 100%;
+    min-width: 0;
   }
 
   .section-title {

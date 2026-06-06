@@ -41,6 +41,26 @@
   text-decoration: none;
 }
 
+@media (max-width: 640px) {
+  .app-topbar {
+    min-height: 58px;
+    padding: 0 12px;
+  }
+
+  .menu-toggle {
+    width: 38px;
+    height: 38px;
+  }
+
+  .app-title {
+    min-width: 0;
+    overflow: hidden;
+    font-size: 1rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
 @media print {
   :host {
     display: none;

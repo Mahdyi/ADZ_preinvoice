@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { finalize } from 'rxjs';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -33,6 +33,7 @@ export class CustomerImportPageComponent {
   constructor(
     private readonly excelImport: CustomerExcelImportService,
     private readonly customers: CustomerApiService,
+    private readonly changeDetector: ChangeDetectorRef,
   ) {}
 
   get validCount(): number {
@@ -61,6 +62,7 @@ export class CustomerImportPageComponent {
 
     this.parsing = true;
     this.parseStatus = 'در حال خواندن فایل اکسل...';
+    this.refreshView();
     this.addProgress({
       label: 'فایل انتخاب شد',
       status: 'done',
@@ -74,6 +76,7 @@ export class CustomerImportPageComponent {
       this.message = this.validCount
         ? 'فایل با موفقیت خوانده شد. برای ثبت در دیتابیس دکمه ورود را بزنید.'
         : 'فایل خوانده شد، اما هیچ ردیف معتبری برای پیش نمایش پیدا نشد.';
+      this.refreshView();
     } catch (error) {
       this.parseResult = null;
       this.parseStatus = 'خواندن فایل کامل نشد.';
@@ -88,6 +91,7 @@ export class CustomerImportPageComponent {
       });
     } finally {
       this.parsing = false;
+      this.refreshView();
     }
   }
 
@@ -123,6 +127,7 @@ export class CustomerImportPageComponent {
     this.error = '';
     this.parseStatus = '';
     this.parseProgress = [];
+    this.refreshView();
   }
 
   private addProgress(progress: CustomerImportProgress): void {
@@ -141,5 +146,11 @@ export class CustomerImportPageComponent {
     if (progress.status === 'running') {
       this.parseStatus = `${progress.label}...`;
     }
+
+    this.refreshView();
+  }
+
+  private refreshView(): void {
+    this.changeDetector.detectChanges();
   }
 }

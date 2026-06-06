@@ -1,6 +1,6 @@
 :host {
   display: grid;
-  grid-template-columns: 48px minmax(220px, 1.4fr) minmax(120px, 0.8fr) minmax(140px, 0.9fr) minmax(160px, 1fr) minmax(190px, 1.2fr) 44px;
+  grid-template-columns: 48px minmax(220px, 1.4fr) minmax(120px, 0.8fr) minmax(140px, 0.9fr) minmax(160px, 1fr) minmax(190px, 1.2fr) 92px;
   gap: 8px;
   align-items: start;
   padding: 7px 0;
@@ -40,10 +40,20 @@ input {
   display: none;
 }
 
+.row-actions {
+  display: flex;
+  gap: 6px;
+  justify-content: flex-start;
+}
+
+.row-actions p-button {
+  flex: 0 0 auto;
+}
+
 @media (max-width: 980px) {
   :host {
-    grid-template-columns: 42px minmax(210px, 1.4fr) 130px 140px 150px 170px 44px;
-    min-width: 932px;
+    grid-template-columns: 42px minmax(210px, 1.4fr) 130px 140px 150px 170px 92px;
+    min-width: 980px;
   }
 }
 
@@ -64,7 +74,7 @@ input {
     align-self: stretch;
   }
 
-  .row-remove {
+  .row-actions {
     justify-self: start;
   }
 }

@@ -6,38 +6,13 @@
   padding: 0 22px 12px;
 }
 
-.table-toolbar {
-  display: flex;
-  justify-content: flex-start;
-  padding: 0 0 8px;
-}
-
-.add-row-button {
-  display: grid;
-  width: 36px;
-  height: 36px;
-  place-items: center;
-  border: 1px solid #9ec9bd;
-  border-radius: 7px;
-  background: #eaf6f2;
-  color: #145849;
-  font-size: 1.35rem;
-  font-weight: 800;
-  line-height: 1;
-  cursor: pointer;
-}
-
-.add-row-button:hover {
-  background: #dcefe9;
-}
-
 .receipt-table {
   overflow: visible;
 }
 
 .receipt-row {
   display: grid;
-  grid-template-columns: 48px minmax(220px, 1.4fr) minmax(120px, 0.8fr) minmax(140px, 0.9fr) minmax(160px, 1fr) minmax(190px, 1.2fr) 44px;
+  grid-template-columns: 48px minmax(220px, 1.4fr) minmax(120px, 0.8fr) minmax(140px, 0.9fr) minmax(160px, 1fr) minmax(190px, 1.2fr) 92px;
   gap: 8px;
 }
 
@@ -56,8 +31,8 @@
   }
 
   .receipt-row {
-    grid-template-columns: 42px minmax(210px, 1.4fr) 130px 140px 150px 170px 44px;
-    min-width: 932px;
+    grid-template-columns: 42px minmax(210px, 1.4fr) 130px 140px 150px 170px 92px;
+    min-width: 980px;
   }
 }
 
@@ -68,10 +43,6 @@
 
   .receipt-table {
     overflow-x: visible;
-  }
-
-  .table-toolbar {
-    justify-content: flex-start;
   }
 
   .receipt-head {

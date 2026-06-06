@@ -389,7 +389,7 @@ export class PreinvoiceListPageComponent implements OnInit {
   }
 
   editPreinvoice(invoice: PreinvoiceSummary): void {
-    window.location.href = `/?preinvoiceId=${invoice.id}`;
+    window.location.href = `/preinvoices/new?preinvoiceId=${invoice.id}`;
   }
 
   savePreinvoice(): void {

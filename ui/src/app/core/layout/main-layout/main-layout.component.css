@@ -9,6 +9,7 @@
   display: grid;
   grid-template-columns: 260px minmax(0, 1fr);
   min-height: calc(100vh - 62px);
+  transition: grid-template-columns 260ms ease;
 }
 
 .app-layout-body.sidebar-collapsed {
@@ -17,16 +18,39 @@
 
 .app-layout-body.sidebar-collapsed app-sidebar {
   overflow: hidden;
+  opacity: 0;
+  transform: translateX(24px);
+  pointer-events: none;
+}
+
+app-sidebar {
+  opacity: 1;
+  transform: translateX(0);
+  transition:
+    opacity 220ms ease,
+    transform 260ms ease;
 }
 
 .app-main-content {
   min-width: 0;
   min-height: calc(100vh - 62px);
+  overflow-x: hidden;
+}
+
+.app-sidebar-backdrop {
+  display: none;
 }
 
 @media (max-width: 760px) {
-  .app-layout-body {
+  .app-layout-body,
+  .app-layout-body.sidebar-collapsed {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .app-main-content {
+    grid-column: 1;
+    width: 100%;
+    min-width: 0;
   }
 
   app-sidebar {
@@ -34,13 +58,35 @@
     top: 62px;
     right: 0;
     bottom: 0;
-    z-index: 30;
+    z-index: 35;
+    width: min(280px, calc(100vw - 32px));
+    max-width: calc(100vw - 32px);
+    box-shadow: -18px 0 42px rgba(14, 30, 26, 0.18);
+    overflow-y: auto;
     transform: translateX(0);
-    transition: transform 160ms ease;
+    transition:
+      opacity 220ms ease,
+      transform 260ms ease;
+  }
+
+  .app-sidebar-backdrop {
+    position: fixed;
+    inset: 62px 0 0;
+    z-index: 30;
+    display: block;
+    border: 0;
+    background: rgba(14, 30, 26, 0.1);
+    opacity: 1;
+    transition: opacity 220ms ease;
   }
 
   .app-layout-body.sidebar-collapsed app-sidebar {
     transform: translateX(100%);
+  }
+
+  .app-layout-body.sidebar-collapsed .app-sidebar-backdrop {
+    opacity: 0;
+    pointer-events: none;
   }
 }
 

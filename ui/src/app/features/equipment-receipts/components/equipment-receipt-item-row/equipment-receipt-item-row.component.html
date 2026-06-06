@@ -47,13 +47,26 @@
 <input pInputText name="notes{{ index }}" [(ngModel)]="row.notes" />
 <span class="print-value notes-print">{{ row.notes || '-' }}</span>
 
-<p-button
-  type="button"
-  styleClass="row-remove"
-  title="حذف ردیف"
-  aria-label="حذف ردیف"
-  icon="pi pi-times"
-  severity="danger"
-  [outlined]="true"
-  (onClick)="removeRequested.emit(row)"
-></p-button>
+<div class="row-actions">
+  <p-button
+    type="button"
+    styleClass="row-add"
+    title="افزودن ردیف"
+    aria-label="افزودن ردیف"
+    icon="pi pi-plus"
+    severity="secondary"
+    [outlined]="true"
+    (onClick)="addRequested.emit()"
+  ></p-button>
+
+  <p-button
+    type="button"
+    styleClass="row-remove"
+    title="حذف ردیف"
+    aria-label="حذف ردیف"
+    icon="pi pi-times"
+    severity="danger"
+    [outlined]="true"
+    (onClick)="removeRequested.emit(row)"
+  ></p-button>
+</div>

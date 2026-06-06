@@ -25,7 +25,7 @@
         styleClass="preinvoice-list-table"
         [value]="preinvoiceSummaries"
         [loading]="loadingPreinvoiceSummaries"
-        [tableStyle]="{ 'min-width': '900px' }"
+        [tableStyle]="{ 'min-width': '820px' }"
       >
         <ng-template pTemplate="header">
           <tr>
@@ -54,7 +54,7 @@
               <div class="row-actions">
                 <p-button
                   type="button"
-                  label="ویرایش"
+                  ariaLabel="ویرایش"
                   icon="pi pi-pencil"
                   severity="secondary"
                   [outlined]="true"
@@ -62,11 +62,7 @@
                 ></p-button>
                 <p-button
                   type="button"
-                  [label]="
-                    printingPreinvoiceId === invoice.id
-                      ? 'در حال آماده سازی...'
-                      : 'چاپ'
-                  "
+                  ariaLabel="چاپ"
                   icon="pi pi-print"
                   severity="secondary"
                   [outlined]="true"

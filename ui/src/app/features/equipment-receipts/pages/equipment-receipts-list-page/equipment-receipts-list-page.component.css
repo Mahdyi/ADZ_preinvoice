@@ -4,15 +4,22 @@
 }
 
 .receipts-list-shell {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   min-height: 100vh;
   padding: 28px 16px;
   background: #eef4f1;
   color: #172622;
+  overflow-x: hidden;
 }
 
 .receipts-list-page,
 .receipt-paper {
   width: min(1220px, 100%);
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
   margin: 0 auto;
   border: 1px solid #d8e4df;
   border-radius: 8px;
@@ -54,6 +61,7 @@
 }
 
 .list-table-wrap {
+  max-width: 100%;
   overflow-x: auto;
   padding: 18px 22px 22px;
 }
@@ -85,13 +93,17 @@ p-message {
 
 @media (max-width: 640px) {
   .receipts-list-shell {
-    padding: 10px;
+    padding: 8px;
   }
 
   .list-header {
     align-items: stretch;
     flex-direction: column;
     padding: 14px;
+  }
+
+  .list-table-wrap {
+    padding: 12px;
   }
 }
 

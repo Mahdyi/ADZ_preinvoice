@@ -8,7 +8,8 @@
         class="menu-link"
         [routerLink]="item.route"
         routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: item.route === '/' }"
+        [routerLinkActiveOptions]="{ exact: true }"
+        (click)="closeAfterSelection()"
       >
         <i [class]="item.icon" aria-hidden="true"></i>
         <span>{{ item.label }}</span>
