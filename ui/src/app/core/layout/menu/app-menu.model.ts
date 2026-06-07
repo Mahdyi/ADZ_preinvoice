@@ -31,6 +31,16 @@ export const APP_MENU: AppMenuGroup[] = [
     ],
   },
   {
+    label: 'تجهیزات',
+    items: [
+      {
+        label: 'ورود تجهیزات از اکسل',
+        route: '/equipment/import',
+        icon: 'pi pi-file-import',
+      },
+    ],
+  },
+  {
     label: 'پیش فاکتورها',
     items: [
       {
