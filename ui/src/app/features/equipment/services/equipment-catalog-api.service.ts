@@ -1,6 +1,7 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
 import {
   EquipmentCatalogDraft,
@@ -37,6 +38,20 @@ export class EquipmentCatalogApiService {
       {
         headers: { Prefer: 'return=representation' },
       },
+    );
+  }
+
+  replaceAll(rows: EquipmentCatalogDraft[]): Observable<void> {
+    return this.http.delete<void>(this.baseUrl).pipe(
+      switchMap(() =>
+        this.http.post<void>(
+          this.baseUrl,
+          rows.map((row) => this.clean(row)),
+          {
+            headers: new HttpHeaders({ Prefer: 'return=minimal' }),
+          },
+        ),
+      ),
     );
   }
 

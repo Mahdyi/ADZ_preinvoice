@@ -1,0 +1,129 @@
+<main class="customer-import-page">
+  <p-card styleClass="import-card">
+    <ng-template pTemplate="header">
+      <header class="page-header">
+        <p>ورود اطلاعات مشتریان از فایل xlsx</p>
+        <h1>ورود مشتریان از اکسل</h1>
+      </header>
+    </ng-template>
+
+    <section class="file-panel">
+      <label class="file-picker">
+        <span>انتخاب فایل اکسل</span>
+        <input
+          type="file"
+          accept=".xlsx"
+          [disabled]="parsing || importing"
+          (change)="handleFileSelected($event)"
+        />
+      </label>
+
+      <div class="file-meta">
+        <span>فایل انتخاب شده</span>
+        <strong>{{ selectedFileName || 'انتخاب نشده' }}</strong>
+      </div>
+    </section>
+
+    <section class="status-messages" *ngIf="message || error">
+      <p-message *ngIf="message" severity="success" [text]="message"></p-message>
+      <p-message *ngIf="error" severity="error" [text]="error"></p-message>
+    </section>
+
+    <p class="parse-status" *ngIf="parseStatus">{{ parseStatus }}</p>
+
+    <section class="summary-grid">
+      <div>
+        <span>ردیف معتبر</span>
+        <strong>{{ validCount }}</strong>
+      </div>
+      <div>
+        <span>ردیف رد شده</span>
+        <strong>{{ skippedCount }}</strong>
+      </div>
+      <div>
+        <span>ستون شناسایی شده</span>
+        <strong>{{ parseResult?.recognizedColumnCount ?? 0 }}</strong>
+      </div>
+    </section>
+
+    <section class="debug-panel" *ngIf="parseProgress.length">
+      <h2>وضعیت خواندن فایل</h2>
+      <ol>
+        <li
+          *ngFor="let item of parseProgress"
+          [class.is-running]="item.status === 'running'"
+          [class.is-done]="item.status === 'done'"
+          [class.is-error]="item.status === 'error'"
+        >
+          <span>{{ item.label }}</span>
+          <small *ngIf="item.detail">{{ item.detail }}</small>
+        </li>
+      </ol>
+    </section>
+
+    <section class="preview-section">
+      <div class="section-title">
+        <h2>پیش نمایش مشتریان</h2>
+        <p>ورود به دیتابیس فقط بعد از زدن دکمه ورود انجام می‌شود.</p>
+      </div>
+
+      <p-table
+        [value]="parseResult?.validRows ?? []"
+        [tableStyle]="{ 'min-width': '820px' }"
+        styleClass="customer-preview-table"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th>عنوان</th>
+            <th>کد</th>
+            <th>شناسه ملی</th>
+            <th>کد اقتصادی</th>
+            <th>کد پستی</th>
+            <th>تلفن</th>
+            <th>آدرس</th>
+          </tr>
+        </ng-template>
+        <ng-template let-customer pTemplate="body">
+          <tr>
+            <td>{{ customer.title }}</td>
+            <td>{{ customer.code || '-' }}</td>
+            <td>{{ customer.national_id || '-' }}</td>
+            <td>{{ customer.economic_code || '-' }}</td>
+            <td>{{ customer.postal_code || '-' }}</td>
+            <td>{{ customer.phone || '-' }}</td>
+            <td>{{ customer.address || '-' }}</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="7" class="empty-table">
+              هنوز فایل معتبری برای پیش نمایش انتخاب نشده است.
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </section>
+
+    <section
+      class="skipped-section"
+      *ngIf="parseResult?.skippedRows?.length"
+    >
+      <h2>ردیف‌های رد شده</h2>
+      <ul>
+        <li *ngFor="let row of parseResult?.skippedRows">
+          ردیف {{ row.rowNumber }}: {{ row.reason }}
+        </li>
+      </ul>
+    </section>
+
+    <footer class="action-row">
+      <p-button
+        type="button"
+        icon="pi pi-upload"
+        [label]="importing ? 'در حال ورود...' : 'ورود به دیتابیس'"
+        [disabled]="importing || parsing || !validCount"
+        (onClick)="importCustomers()"
+      ></p-button>
+    </footer>
+  </p-card>
+</main>

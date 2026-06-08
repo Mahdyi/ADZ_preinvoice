@@ -23,6 +23,7 @@ export class EquipmentReceiptItemRowComponent {
   @Output() equipmentSearch = new EventEmitter<EquipmentReceiptRow>();
   @Output() equipmentSelected =
     new EventEmitter<EquipmentReceiptLookupOption>();
+  @Output() addRequested = new EventEmitter<void>();
   @Output() removeRequested = new EventEmitter<EquipmentReceiptRow>();
 
   get equipmentAutocompleteValue(): string | EquipmentReceiptLookupOption {

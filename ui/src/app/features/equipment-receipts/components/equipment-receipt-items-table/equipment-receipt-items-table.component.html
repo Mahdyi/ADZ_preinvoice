@@ -1,17 +1,4 @@
 <section class="receipt-items">
-  <div class="table-toolbar">
-    <p-button
-      type="button"
-      styleClass="add-row-button"
-      title="افزودن ردیف"
-      aria-label="افزودن ردیف"
-      icon="pi pi-plus"
-      severity="secondary"
-      [outlined]="true"
-      (onClick)="addRowRequested.emit()"
-    ></p-button>
-  </div>
-
   <div class="receipt-table">
     <div class="receipt-row receipt-head">
       <span>ردیف</span>
@@ -29,6 +16,7 @@
         [index]="i"
         (equipmentSearch)="equipmentSearch.emit($event)"
         (equipmentSelected)="equipmentSelected.emit({ row, option: $event })"
+        (addRequested)="addRowRequested.emit()"
         (removeRequested)="removeRowRequested.emit($event)"
       ></app-equipment-receipt-item-row>
     </ng-template>

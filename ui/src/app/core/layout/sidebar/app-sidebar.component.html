@@ -1,0 +1,19 @@
+<aside class="app-sidebar" aria-label="ناوبری اصلی">
+  <nav class="menu-groups">
+    <section class="menu-group" *ngFor="let group of menu">
+      <h2>{{ group.label }}</h2>
+
+      <a
+        *ngFor="let item of group.items"
+        class="menu-link"
+        [routerLink]="item.route"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        (click)="closeAfterSelection()"
+      >
+        <i [class]="item.icon" aria-hidden="true"></i>
+        <span>{{ item.label }}</span>
+      </a>
+    </section>
+  </nav>
+</aside>

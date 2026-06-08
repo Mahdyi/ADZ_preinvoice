@@ -4,14 +4,21 @@
 }
 
 .receipt-shell {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   min-height: 100vh;
   padding: 28px 16px;
   background: #eef4f1;
   color: #172622;
+  overflow-x: hidden;
 }
 
 .receipt-paper {
   width: min(1220px, 100%);
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
   margin: 0 auto;
   border: 1px solid #d8e4df;
   border-radius: 8px;
@@ -21,6 +28,9 @@
 
 .receipt-actions {
   width: min(1220px, 100%);
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
   margin: 0 auto 12px;
   display: flex;
   justify-content: flex-end;
@@ -46,7 +56,7 @@
 
 @media (max-width: 640px) {
   .receipt-shell {
-    padding: 10px;
+    padding: 8px;
   }
 
   .receipt-actions {
@@ -55,6 +65,7 @@
   }
 
   .receipt-paper {
+    width: 100%;
     border-radius: 0;
     box-shadow: none;
   }
